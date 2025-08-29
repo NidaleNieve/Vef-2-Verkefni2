@@ -5,6 +5,6 @@
 ## User Stories
 
 #### Young people
-Who: Group of friends cant decide on an activity in advance,
-what: They open the "Tinder Restaurant app (Flamed)" and add activities they might be interested in.
-why: They want to avoid the burden of having sole responsibility for picking a location.
+**WHO**: Group of friends cant decide on an activity in advance,
+**WHAT**: They open the "Tinder Restaurant app (Flamed)" and add activities they might be interested in.
+**WHY**: They want to avoid the burden of having sole responsibility for picking a location.
