@@ -3,14 +3,11 @@
 
 Daniel, Kiara, Hörður
 
-## WireFrame
-![wireframe](./20250829_115336.jpg)
-
 =======
 ## Flamed?
 ### Lýsing
 #### Vefapp þar sem hægt er að finna veitingastað í hóp.
-Daniel-Readme
+
 Maður býr til leik, býður vinum sínum og hver og einn "swipar" gegnum veitingastaði, hægri fyrir já, vinstri fyrir nei. Appið finnur svo veitingastað sem allir eru sammála að fara.
 Ef að enginn er sammála, eða margir veitingastaðir fundnir, þá er hægt að snúa lukkuhjóli til að ákveða.
 
@@ -32,9 +29,8 @@ Ef að enginn er sammála, eða margir veitingastaðir fundnir, þá er hægt a�
   
 =======
 
-
-Maður býr til leik, býður vinum sínum og hver og einn "swipar" gegnum veitingastaði, hægri fyrir já, vinstri fyrir nei. Appið finnur svo veitingastað sem allir eru sammála að fara.
-Ef að enginn er sammála, eða margir veitingastaðir fundnir, þá er hægt að snúa lukkuhjóli til að ákveða.
+## WireFrame
+![wireframe](./20250829_115336.jpg)
 
 #### English
 Instead of pulling teeth. Press buttons!
@@ -50,7 +46,6 @@ Picking a random location will remove any dissenting voices.
 - Invite your friends to swipe on the list and add more prefrences(if needed).
 - Initiate tie breakers.
 
- main
 ### User Stories
 
 #### Young People
