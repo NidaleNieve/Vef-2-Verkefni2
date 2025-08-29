@@ -6,7 +6,7 @@ Vefapp þar sem hægt er að finna veitingastað eða
 
 Að geta fundið veitingastað/activity til að gera saman í hóp/fjölskyldu.
 Maður joinar hóp, velur preferences (verð, ofnæmi, matur, vegalengd) og svo swipar maður í gegnum veitingastaðina. 
-Síðan sýnir svo alla staðina sem hópurinn er sammála (Það er hægt að neita og byrja aftur/finna næsta). Það er einnig hægt að spinna wheel ef að hópurinn er ekki sammála eða enginn staður valinn
+Síðan sýnir svo alla staðina sem hópurinn er sammála (Það er hægt að neita og byrja aftur/finna næsta). Það er einnig hægt að snúa lukkuhjóli ef að hópurinn er ekki sammála eða enginn staður valinn
 
 
 
