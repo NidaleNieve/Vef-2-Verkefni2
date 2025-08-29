@@ -8,6 +8,19 @@ Að geta fundið veitingastað/activity til að gera saman í hóp/fjölskyldu.
 Maður joinar hóp, velur preferences (verð, ofnæmi, matur, vegalengd) og svo swipar maður í gegnum veitingastaðina. 
 Síðan sýnir svo alla staðina sem hópurinn er sammála (Það er hægt að neita og byrja aftur/finna næsta). Það er einnig hægt að snúa lukkuhjóli ef að hópurinn er ekki sammála eða enginn staður valinn
 
+#### English
+Instead of pulling teeth. Press buttons!
+Tired of having to wrangle answers out of people about where to go, only to be shot down by the very same people that told **you** to choose.
+With our app, **you** can exploit **their** need for dopamine by feeding them a list of restaurant tailored your prefrences, simply invite your friends to your pre-made group and have them swipe until you have a clear winner, but what if everyone picks something different?
+**Remove choice and leave it to chance!**
+If there is no winner after swiping, spin the wheel! populated by everyones choices.
+Picking a random location will remove any dissenting voices.
+-- No hassle.
+-- Quickly put a group together.
+-- Pick your prefrences.
+-- Swipe away at an automatically generated, list based on your prefrences.
+-- Invite your friends to swipe on the list and add more prefrences(if needed).
+-- Initiate tie breakers.
 
 
 ### User Stories
