@@ -2,12 +2,29 @@
 ## Almenn lýsing og wireflows af Vefappi
 
 
+
+=======
 ## Flamed?
 ### Description
 #### Vefapp þar sem hægt er að finna veitingastað í hóp.
 
+
 Maður býr til leik, býður vinum sínum og hver og einn "swipar" gegnum veitingastaði, hægri fyrir já, vinstri fyrir nei. Appið finnur svo veitingastað sem allir eru sammála að fara.
 Ef að enginn er sammála, eða margir veitingastaðir fundnir, þá er hægt að snúa lukkuhjóli til að ákveða.
+
+#### English
+Instead of pulling teeth. Press buttons!
+Tired of having to wrangle answers out of people about where to go, only to be shot down by the very same people that told **you** to choose.
+With our app, **you** can exploit **their** need for dopamine by feeding them a list of restaurant tailored your prefrences, simply invite your friends to your pre-made group and have them swipe until you have a clear winner, but what if everyone picks something different?
+**Remove choice and leave it to chance!**
+If there is no winner after swiping, spin the wheel! populated by everyones choices.
+Picking a random location will remove any dissenting voices.
+-- No hassle.
+-- Quickly put a group together.
+-- Pick your prefrences.
+-- Swipe away at an automatically generated, list based on your prefrences.
+-- Invite your friends to swipe on the list and add more prefrences(if needed).
+-- Initiate tie breakers.
 
 ### User Stories
 
