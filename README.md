@@ -11,9 +11,14 @@ Ef að enginn er sammála, eða margir veitingastaðir fundnir, þá er hægt a�
 #### Upplýsingar/Hugmyndir
 - Margar mismunandi leikjatýpur
   - *Lukkuhjól*: Hópurinn velur sínar óskir um mat og staðsetningu og fer svo strax í að snúa lukkujhólið
-  - *Mót*: Hópurinn velur sínar óskir um mat og staðsetningu og fer svo í útsláttarmót, þar sem veitingastaðir eru birtir fyrir alla og það er kosið um hver kemst áfram.
+  - *Mót*: Hópurinn velur sínar óskir um mat og staðsetningu og fer svo í útsláttarmót, þar sem veitingastaðir eru birtir fyrir alla og það er kosið um hvaða staðir komast áfram.
 
-- 
+- Hérna eru nokrar hugmyndir um stillingar/óskir sem hægt væri að velja
+  - *Aksturstími*: Hversu langt það tekur að keyra/labba að staðnum, notar Google Maps API.
+  - *Krakkavænt*: Til Dæmisþ: Hvort að staðurinn sé með leiksvæði eða barnamatseðil
+  - 
+ 
+  - 
 ### User Stories
 
 #### Young People
@@ -44,15 +49,8 @@ Host hefur vald
 Login til þess að geyma favorites og hópa
 Haft marga usera á einu device
 
-Price preferences, krakka vænt, leikvöllur, Distance
+Price preferences, 
 Driving distance time með því að nota google maps api
-
-Ef að hópurinn er ekki sammála (annað hvort mörg options eða engin)
-Tournament style, þar sem er kýst
-Kjósa
-Skæri-blað-steinn
-Roulette
-Gefa einum einstakling power
 
 
 Live mode og Asynchronous mode.
