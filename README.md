@@ -12,6 +12,8 @@ Ef að enginn er sammála, eða margir veitingastaðir fundnir, þá er hægt a�
 - Margar mismunandi leikjatýpur
   - *Lukkuhjól*: Hópurinn velur sínar óskir um mat og staðsetningu og fer svo strax í að snúa lukkujhólið
   - *Mót*: Hópurinn velur sínar óskir um mat og staðsetningu og fer svo í útsláttarmót, þar sem veitingastaðir eru birtir fyrir alla og það er kosið um hvaða staðir komast áfram.
+  - *"Live Mode"*: Allir spila saman á sama tíma og niðurstöður birtar samstundis. Hraðara og skemmtilegra
+  - *"Asynchronous mode"*: Fólk spilar þegar það hentar þeim, niðurstöður svo birtar gegnum Notification.
 
 - Hérna eru nokrar hugmyndir um stillingar/óskir sem hægt væri að velja
   - *Aksturstími*: Hversu langt það tekur að keyra/labba að staðnum, notar Google Maps API.
@@ -21,7 +23,7 @@ Ef að enginn er sammála, eða margir veitingastaðir fundnir, þá er hægt a�
 - Eftir að hafa valið veitingastað og leikurinn er búinn þá spyr appið hvort að þú viljir geyma upplýsingarnar og búa til reikning.
 - Hægt að merkja veitingastað sem favorite, sem geymist og eykur tækifæri á að hann sé valinn (Golden buzzer style animation þegar það er ýtt á takkann)
 - Hægt að hafa marga notendur á einum síma, þannig ef að manneskja hefur ekki síma eða vill ekki að nota hann, þá getur hann samt verið með að velja staðþ
-- 
+- Ef að
 
   
 ### User Stories
