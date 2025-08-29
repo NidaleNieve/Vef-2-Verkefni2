@@ -16,7 +16,7 @@ Ef að enginn er sammála, eða margir veitingastaðir fundnir, þá er hægt a�
   - *Lukkuhjól*: Hópurinn velur sínar óskir um mat og staðsetningu og fer svo strax í að snúa lukkujhólið
   - *Mót*: Hópurinn velur sínar óskir um mat og staðsetningu og fer svo í útsláttarmót, þar sem veitingastaðir eru birtir fyrir alla og það er kosið um hvaða staðir komast áfram.
   - *"Live Mode"*: Allir spila saman á sama tíma og niðurstöður birtar samstundis. Hraðara og skemmtilegra
-  - *"Asynchronous mode"*: Fólk spilar þegar það hentar þeim, niðurstöður svo birtar gegnum Notification.
+  - *"Asynchronous mode"*: Fólk spilar þegar þeim hentar, niðurstöður svo birtar gegnum Notification.
 
 - Hérna eru nokrar hugmyndir um stillingar/óskir sem hægt væri að velja
   - *Aksturstími*: Hversu langt það tekur að keyra/labba að staðnum, notar Google Maps API.
@@ -35,7 +35,7 @@ Ef að enginn er sammála, eða margir veitingastaðir fundnir, þá er hægt a�
 #### English
 Instead of pulling teeth. Press buttons!
 Tired of having to wrangle answers out of people about where to go, only to be shot down by the very same people that told **you** to choose.
-With our app, **you** can exploit **their** need for dopamine by feeding them a list of restaurant tailored your prefrences, simply invite your friends to your pre-made group and have them swipe until you have a clear winner, but what if everyone picks something different?
+With our app, **you** can exploit **their** need for dopamine by feeding them a list of restaurant tailored your preferences, simply invite your friends to your pre-made group and have them swipe until you have a clear winner, but what if everyone picks something different?
 **Remove choice and leave it to chance!**
 If there is no winner after swiping, spin the wheel! populated by everyones choices.
 Picking a random location will remove any dissenting voices.
@@ -67,22 +67,3 @@ Picking a random location will remove any dissenting voices.
 
 ### Dale Grible - Pest Control
 Dale just hired a group of interns for the summer. After a decade of hard work business is picking up, even without a college degree, Dale has found a way to sustain himself, much to his parents chagrin. At the start of the summer Dale decided he would expand his buisness to be able to take on a more clienttell and scaleback his involvment to set himself up for retirement, to enable himself to do that, he decided to hire a bach of interns for the summer. If everything goes well, he plans to hire them fulltime. Dale wants a light hearted way to break the ice, organize a little shindig and grab some food with his new team members.
-
-### 
-
-
-
-Host hefur vald
-
-Live mode og Asynchronous mode.
-Live mode, allir í hópnum joina, og þegar það er búið að swipa þá sýnir það results instantly.
-Asynchronous mode, getur swipað hvenær sem er, ekki endilega á sama tíma, og svo þegar allir eru búnir þá er sent notification með results
-
-Eftir að maður skrifar inn preferences í fyrsta sinn þá promptar appið að seiva og búa til optional account.
-
-
-Sundlaugar
-Skemmtun ()
-Bíó
-Túrismi
-
