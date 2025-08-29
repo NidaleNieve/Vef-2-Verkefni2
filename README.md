@@ -18,7 +18,12 @@ Ef að enginn er sammála, eða margir veitingastaðir fundnir, þá er hægt a�
   - *Krakkavænt*: Til Dæmis: Hvort að staðurinn sé með leiksvæði eða barnamatseðil
   - *Verð*: Notar Google Maps og Tripadvisor upplýsingar til þess að finna út verðið sirka, $ - $$$$ (í rauninni 2.000 - 10.000kr)
  
-  - 
+- Eftir að hafa valið veitingastað og leikurinn er búinn þá spyr appið hvort að þú viljir geyma upplýsingarnar og búa til reikning.
+- Hægt að merkja veitingastað sem favorite, sem geymist og eykur tækifæri á að hann sé valinn (Golden buzzer style animation þegar það er ýtt á takkann)
+- Hægt að hafa marga notendur á einum síma, þannig ef að manneskja hefur ekki síma eða vill ekki að nota hann, þá getur hann samt verið með að velja staðþ
+- 
+
+  
 ### User Stories
 
 #### Young People
@@ -46,12 +51,6 @@ Dale just hired a group of interns for the summer. After a decade of hard work b
 
 
 Host hefur vald
-Login til þess að geyma favorites og hópa
-Haft marga usera á einu device
-
-Price preferences, 
-Driving distance time með því að nota google maps api
-
 
 Live mode og Asynchronous mode.
 Live mode, allir í hópnum joina, og þegar það er búið að swipa þá sýnir það results instantly.
