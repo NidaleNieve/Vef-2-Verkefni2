@@ -3,12 +3,17 @@
 
 
 ## Flamed?
-### Description
+### Lýsing
 #### Vefapp þar sem hægt er að finna veitingastað í hóp.
-
 Maður býr til leik, býður vinum sínum og hver og einn "swipar" gegnum veitingastaði, hægri fyrir já, vinstri fyrir nei. Appið finnur svo veitingastað sem allir eru sammála að fara.
 Ef að enginn er sammála, eða margir veitingastaðir fundnir, þá er hægt að snúa lukkuhjóli til að ákveða.
 
+#### Upplýsingar/Hugmyndir
+- Margar mismunandi leikjatýpur
+  - *Lukkuhjól*: Hópurinn velur sínar óskir um mat og staðsetningu og fer svo strax í að snúa lukkujhólið
+  - *Mót*: Hópurinn velur sínar óskir um mat og staðsetningu og fer svo í útsláttarmót, þar sem veitingastaðir eru birtir fyrir alla og það er kosið um hver kemst áfram.
+
+- 
 ### User Stories
 
 #### Young People
