@@ -22,7 +22,7 @@ Picking a random location will remove any dissenting voices.
 - No hassle.
 - Quickly put a group together.
 - Pick your prefrences.
-- Swipe away at an automatically generated, list based on your prefrences.
+- Swipe away at an automatically generated list, based on your prefrences.
 - Invite your friends to swipe on the list and add more prefrences(if needed).
 - Initiate tie breakers.
 
