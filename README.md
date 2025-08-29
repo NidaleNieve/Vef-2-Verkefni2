@@ -1,14 +1,13 @@
 # Vefforritun 2 - Verkefni 2
 ## Almenn lýsing og wireflows af Vefappi
 
+
+## Flamed?
 ### Description
-Vefapp þar sem hægt er að finna veitingastað eða 
+#### Vefapp þar sem hægt er að finna veitingastað í hóp.
 
-Að geta fundið veitingastað/activity til að gera saman í hóp/fjölskyldu.
-Maður joinar hóp, velur preferences (verð, ofnæmi, matur, vegalengd) og svo swipar maður í gegnum veitingastaðina. 
-Síðan sýnir svo alla staðina sem hópurinn er sammála (Það er hægt að neita og byrja aftur/finna næsta). Það er einnig hægt að snúa lukkuhjóli ef að hópurinn er ekki sammála eða enginn staður valinn
-
-
+Maður býr til leik, býður vinum sínum og hver og einn "swipar" gegnum veitingastaði, hægri fyrir já, vinstri fyrir nei. Appið finnur svo veitingastað sem allir eru sammála að fara.
+Ef að enginn er sammála, eða margir veitingastaðir fundnir, þá er hægt að snúa lukkuhjóli til að ákveða.
 
 ### User Stories
 
