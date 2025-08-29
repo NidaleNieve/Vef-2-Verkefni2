@@ -15,8 +15,8 @@ Ef að enginn er sammála, eða margir veitingastaðir fundnir, þá er hægt a�
 
 - Hérna eru nokrar hugmyndir um stillingar/óskir sem hægt væri að velja
   - *Aksturstími*: Hversu langt það tekur að keyra/labba að staðnum, notar Google Maps API.
-  - *Krakkavænt*: Til Dæmisþ: Hvort að staðurinn sé með leiksvæði eða barnamatseðil
-  - 
+  - *Krakkavænt*: Til Dæmis: Hvort að staðurinn sé með leiksvæði eða barnamatseðil
+  - *Verð*: Notar Google Maps og Tripadvisor upplýsingar til þess að finna út verðið sirka, $ - $$$$ (í rauninni 2.000 - 10.000kr)
  
   - 
 ### User Stories
