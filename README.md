@@ -19,12 +19,12 @@ With our app, **you** can exploit **their** need for dopamine by feeding them a 
 **Remove choice and leave it to chance!**
 If there is no winner after swiping, spin the wheel! populated by everyones choices.
 Picking a random location will remove any dissenting voices.
--- No hassle.
--- Quickly put a group together.
--- Pick your prefrences.
--- Swipe away at an automatically generated, list based on your prefrences.
--- Invite your friends to swipe on the list and add more prefrences(if needed).
--- Initiate tie breakers.
+- No hassle.
+- Quickly put a group together.
+- Pick your prefrences.
+- Swipe away at an automatically generated, list based on your prefrences.
+- Invite your friends to swipe on the list and add more prefrences(if needed).
+- Initiate tie breakers.
 
 ### User Stories
 
