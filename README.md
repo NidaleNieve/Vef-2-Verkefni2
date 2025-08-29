@@ -1,10 +1,14 @@
 # Vefforritun 2 - Verkefni 2
 ## Almenn lýsing og wireflows af Vefappi
 
+## WireFrame
+![wireframe](./20250829_115336.jpg)
 
+=======
 ## Flamed?
 ### Lýsing
 #### Vefapp þar sem hægt er að finna veitingastað í hóp.
+Daniel-Readme
 Maður býr til leik, býður vinum sínum og hver og einn "swipar" gegnum veitingastaði, hægri fyrir já, vinstri fyrir nei. Appið finnur svo veitingastað sem allir eru sammála að fara.
 Ef að enginn er sammála, eða margir veitingastaðir fundnir, þá er hægt að snúa lukkuhjóli til að ákveða.
 
@@ -23,9 +27,28 @@ Ef að enginn er sammála, eða margir veitingastaðir fundnir, þá er hægt a�
 - Eftir að hafa valið veitingastað og leikurinn er búinn þá spyr appið hvort að þú viljir geyma upplýsingarnar og búa til reikning.
 - Hægt að merkja veitingastað sem favorite, sem geymist og eykur tækifæri á að hann sé valinn (Golden buzzer style animation þegar það er ýtt á takkann)
 - Hægt að hafa marga notendur á einum síma, þannig ef að manneskja hefur ekki síma eða vill ekki að nota hann, þá getur hann samt verið með að velja staðþ
-- Ef að
-
   
+=======
+
+
+Maður býr til leik, býður vinum sínum og hver og einn "swipar" gegnum veitingastaði, hægri fyrir já, vinstri fyrir nei. Appið finnur svo veitingastað sem allir eru sammála að fara.
+Ef að enginn er sammála, eða margir veitingastaðir fundnir, þá er hægt að snúa lukkuhjóli til að ákveða.
+
+#### English
+Instead of pulling teeth. Press buttons!
+Tired of having to wrangle answers out of people about where to go, only to be shot down by the very same people that told **you** to choose.
+With our app, **you** can exploit **their** need for dopamine by feeding them a list of restaurant tailored your prefrences, simply invite your friends to your pre-made group and have them swipe until you have a clear winner, but what if everyone picks something different?
+**Remove choice and leave it to chance!**
+If there is no winner after swiping, spin the wheel! populated by everyones choices.
+Picking a random location will remove any dissenting voices.
+- No hassle.
+- Quickly put a group together.
+- Pick your prefrences.
+- Swipe away at an automatically generated list, based on your prefrences.
+- Invite your friends to swipe on the list and add more prefrences(if needed).
+- Initiate tie breakers.
+
+ main
 ### User Stories
 
 #### Young People
