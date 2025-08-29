@@ -1,7 +1,7 @@
 # Vefforritun 2 - Verkefni 2
 ## Almenn lýsing og wireflows af Vefappi
 
-Daniel, Kjara, Hörður
+Daniel, Kiara, Hörður
 
 ## WireFrame
 ![wireframe](./20250829_115336.jpg)
