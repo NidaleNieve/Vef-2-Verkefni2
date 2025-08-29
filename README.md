@@ -1,7 +1,9 @@
 # Vefforritun 2 - Verkefni 2
 ## Almenn lýsing og wireflows af Vefappi
 
-
+## WireFrame
+![wireframe](https://drive.google.com/file/d/1EP3aRdV_BPXbb9TYn3BD48b5lEaF44a4/view?usp=sharing
+)
 
 =======
 ## Flamed?
