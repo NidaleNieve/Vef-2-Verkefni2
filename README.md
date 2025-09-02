@@ -26,6 +26,8 @@ Ef að enginn er sammála, eða margir veitingastaðir fundnir, þá er hægt a�
 - Eftir að hafa valið veitingastað og leikurinn er búinn þá spyr appið hvort að þú viljir geyma upplýsingarnar og búa til reikning.
 - Hægt að merkja veitingastað sem favorite, sem geymist og eykur tækifæri á að hann sé valinn (Golden buzzer style animation þegar það er ýtt á takkann)
 - Hægt að hafa marga notendur á einum síma, þannig ef að manneskja hefur ekki síma eða vill ekki að nota hann, þá getur hann samt verið með að velja staðþ
+- Eftir að hafa klárað fyrsta leikinn sinn spyr appið þig hvort að þú viljir búa til account til þess að geta vista stillingar og óskir þínar. Það væri einnig hægt að vista hópinn þannig að þurfi ekki að bjóða öllum aftur
+- Bæta við Sundlaugum og öðrum skemmtistöðum (td. söfn eða Smárabíó skemmtisvæðið). Það væri hægt að velja í byrjun hvort að maður vilji finna veitingastaði og/eða skemmtistað, þetta getur notað nákvæmlega sama formattið.
   
 =======
 
