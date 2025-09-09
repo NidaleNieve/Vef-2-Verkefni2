@@ -17,8 +17,15 @@ export default async function Home() {
     <main>
       <h1 className="text-9xl">Restaurants</h1>
       <ul>
-        {restaurants.map((r) => (
-          <li key={r.id}>{r.name}</li>
+        {restaurants.map((t) => (
+          <li className="text-2xl" key={t.id}>
+            {t.name}
+            <ul>
+              <li className="text-l">
+                {t.location.neighborhood}, {t.rating}
+              </li>
+            </ul>
+          </li>
         ))}
       </ul>
     </main>

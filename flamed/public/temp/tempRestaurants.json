@@ -1,5 +1,6 @@
 [
   {
+    "id": 1,
     "name": "Sunny Side Bistro",
     "location": {
       "latitude": 64.1355,
@@ -23,6 +24,7 @@
     "delivery_available": true
   },
   {
+    "id": 2,
     "name": "Bob's Burgers",
     "location": {
       "latitude": 64.1500,
@@ -46,6 +48,7 @@
     "delivery_available": false
   },
   {
+    "id": 3,
     "name": "Nordic Noodles",
     "location": {
       "latitude": 64.1400,
@@ -69,6 +72,7 @@
     "delivery_available": true
   },
   {
+    "id": 4,
     "name": "Arctic Grill",
     "location": { "latitude": 64.1250, "longitude": -21.9300, "address": "Harbor Road 5", "neighborhood": "Marina" },
     "rating": 4.8,
@@ -87,6 +91,7 @@
     "delivery_available": false
   },
   {
+    "id": 5,
     "name": "Midnight Pizza",
     "location": { "latitude": 64.1300, "longitude": -21.9100, "address": "Skólavörðustígur 7", "neighborhood": "City Center" },
     "rating": 4.1,
@@ -105,6 +110,7 @@
     "delivery_available": true
   },
   {
+    "id": 6,
     "name": "Saga Sushi",
     "location": { "latitude": 64.1280, "longitude": -21.9050, "address": "Fiskislóð 10", "neighborhood": "Harbor District" },
     "rating": 4.6,
@@ -123,6 +129,7 @@
     "delivery_available": true
   },
   {
+    "id": 7,
     "name": "Highland Coffee House",
     "location": { "latitude": 64.1200, "longitude": -21.8800, "address": "Mountain View 3", "neighborhood": "Eastside" },
     "rating": 4.9,
@@ -141,6 +148,7 @@
     "delivery_available": false
   },
   {
+    "id": 8,
     "name": "Volcano Vegan",
     "location": { "latitude": 64.1180, "longitude": -21.8700, "address": "Eco Street 11", "neighborhood": "Southside" },
     "rating": 4.4,
@@ -159,6 +167,7 @@
     "delivery_available": true
   },
   {
+    "id": 9,
     "name": "Glacier Steakhouse",
     "location": { "latitude": 64.1450, "longitude": -21.9500, "address": "Frost Avenue 2", "neighborhood": "West Harbor" },
     "rating": 4.3,
@@ -177,6 +186,7 @@
     "delivery_available": false
   },
   {
+    "id": 10,
     "name": "Harbor Ice Cream",
     "location": { "latitude": 64.1270, "longitude": -21.9600, "address": "Harbor Lane 8", "neighborhood": "Seaside" },
     "rating": 4.0,
