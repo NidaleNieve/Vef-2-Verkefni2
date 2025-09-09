@@ -1,6 +1,29 @@
 import Image from "next/image";
+//import { useEffect, useState } from "react";
 
-export default function Home() {
+export default async function Home() {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+  let restaurants = [];
+
+  try {
+    const res = await fetch(`${baseUrl}/temp/tempRestaurants.json`, { cache: 'no-store' });
+    if (!res.ok) throw new Error(`Failed to fetch restaurants: ${res.status}`);
+    restaurants = await res.json();
+  } catch (err) {
+    console.error('Failed to load restaurants:', err);
+  }
+
+  return (
+    <main>
+      <h1 className="text-9xl">Restaurants</h1>
+      <ul>
+        {restaurants.map((r) => (
+          <li key={r.id}>{r.name}</li>
+        ))}
+      </ul>
+    </main>
+  );
+  /*
   return (
     <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
@@ -100,5 +123,6 @@ export default function Home() {
         </a>
       </footer>
     </div>
-  );
+    
+  );*/
 }
