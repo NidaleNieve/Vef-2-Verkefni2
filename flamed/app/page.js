@@ -1,10 +1,9 @@
 //import path og promises, til þess að geta lesið skjöl async
 import path from "path";
 import { promises as fs } from "fs";
-import RestaurantSwiper from "./RestaurantSwiper";
+import Swiper from "./swiper";
 
 import Image from "next/image";
-import { useState } from "react";
 //import { useEffect, useState } from "react";
 
 //bý til function sem hleður veitingastaðinu úr temp json, async
@@ -13,7 +12,7 @@ async function loadRestaurants() {
     const filePath = path.join(process.cwd(), "public", "temp", "tempRestaurants.json");
     const file = await fs.readFile(filePath, "utf8");
     return JSON.parse(file);
-  } catch (err) {
+  } catch (err) { //basic error handling
     console.error("Failed to load restaurants:", err);
     return [];
   }
@@ -25,35 +24,11 @@ export default async function Home() {
   //Bý til allar breyturnar sem halda utan um veitingastaðina og hvað er valið. Nota react state til þess að það virki dynamically
 
   return (
-    <main>
-      <h1 className="text-9xl">Restaurants</h1>
-      {restaurants.map((t) => (
-        <div key={t.id} className="mb-8">
-          <h2 className="text-4xl font-bold">{t.name}</h2>
-          <p className="text-xl">
-            {t.location.neighborhood}, Rating: {t.rating}
-          </p>
-          <p className="text-lg">Cuisine: {t.cuisine.join(", ")}</p>
-        </div>
-      ))}
-
-
-      {/*
-      <ul>
-        {restaurants.map((t) => (
-          <li className="text-2xl" key={t.id}>
-            {t.name}
-            <ul>
-              <li className="ml-4 text-lg">
-                {t.location.neighborhood}, {t.rating}
-                <br />
-                {t.cuisine.join(", ")}
-              </li>
-            </ul>
-          </li>
-        ))}
-      </ul>
-      */}
+    <main className="min-h-screen flex items-center justify-center p-6">
+      <div className="w-full max-w-xl">
+        <h1 className="text-4xl font-bold mb-6">Restaurants</h1>
+        <RestaurantSwiper initialRestaurants={restaurants} />
+      </div>
     </main>
   );
   /*
