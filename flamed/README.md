@@ -34,3 +34,30 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+## Data accessible in supabase
+
+| Name | Format | type |
+|---| ---| --- |
+| id | uuid | string |
+| name | varchar | string |
+| is_active | boolean | boolean |
+| created_at | timestamp with time zone | string | 
+| updated_at | timestamp with time zone | string |
+| external_id | text | string |
+| location_id | bigint | number |
+| avg_rating | numeric | number |
+| review_count | integer | number |
+| status | text | string |
+| status_text | text | string |
+| price_tag | text | string |
+| cuisines | text[] | array |
+| has_menu | boolean | boolean |
+| menu_url | text | string |
+| parent_city | text | string |
+| hero_img_url | text | string |
+| square_img_url | text | string |
+| thumbnail_template | text | string |
+| review_snippets | jsonb | json |
+| raw | jsonb | json |
