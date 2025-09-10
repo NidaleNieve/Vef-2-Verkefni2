@@ -54,15 +54,18 @@ export default function Swiper({ initialRestaurants = [] }) {
 
             <div className="flex gap-3">
             <button
-                onClick={handleAccept}
-                className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded"
-            >
+                onClick={acceptedItem}
+                className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
                 Accept
             </button>
             <button
-                onClick={handleReject}
-                className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded"
-            >
+                onClick={ignoreItem}
+                className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded">
+                Skip
+            </button>
+            <button
+                onClick={rejectedItem}
+                className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded">
                 Reject
             </button>
             </div>

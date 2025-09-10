@@ -1,8 +1,7 @@
 //import path og promises, til þess að geta lesið skjöl async
 import path from "path";
 import { promises as fs } from "fs";
-import Swiper from "./swiper";
-
+import Swiper from "../components/swiper";
 import Image from "next/image";
 //import { useEffect, useState } from "react";
 
@@ -27,7 +26,7 @@ export default async function Home() {
     <main className="min-h-screen flex items-center justify-center p-6">
       <div className="w-full max-w-xl">
         <h1 className="text-4xl font-bold mb-6">Restaurants</h1>
-        <RestaurantSwiper initialRestaurants={restaurants} />
+        <Swiper initialRestaurants={await loadRestaurants()} />
       </div>
     </main>
   );
