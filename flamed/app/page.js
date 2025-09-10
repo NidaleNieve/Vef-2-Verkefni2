@@ -1,21 +1,44 @@
+//import path og promises, til þess að geta lesið skjöl async
+import path from "path";
+import { promises as fs } from "fs";
+import RestaurantSwiper from "./RestaurantSwiper";
+
 import Image from "next/image";
+import { useState } from "react";
 //import { useEffect, useState } from "react";
+
+//bý til function sem hleður veitingastaðinu úr temp json, async
+async function loadRestaurants() {
+  try {
+    const filePath = path.join(process.cwd(), "public", "temp", "tempRestaurants.json");
+    const file = await fs.readFile(filePath, "utf8");
+    return JSON.parse(file);
+  } catch (err) {
+    console.error("Failed to load restaurants:", err);
+    return [];
+  }
+}
 
 export default async function Home() {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-  let restaurants = [];
-
-  try {
-    const res = await fetch(`${baseUrl}/temp/tempRestaurants.json`, { cache: 'no-store' });
-    if (!res.ok) throw new Error(`Failed to fetch restaurants: ${res.status}`);
-    restaurants = await res.json();
-  } catch (err) {
-    console.error('Failed to load restaurants:', err);
-  }
+  //let restaurants = [];
+  //Bý til allar breyturnar sem halda utan um veitingastaðina og hvað er valið. Nota react state til þess að það virki dynamically
 
   return (
     <main>
       <h1 className="text-9xl">Restaurants</h1>
+      {restaurants.map((t) => (
+        <div key={t.id} className="mb-8">
+          <h2 className="text-4xl font-bold">{t.name}</h2>
+          <p className="text-xl">
+            {t.location.neighborhood}, Rating: {t.rating}
+          </p>
+          <p className="text-lg">Cuisine: {t.cuisine.join(", ")}</p>
+        </div>
+      ))}
+
+
+      {/*
       <ul>
         {restaurants.map((t) => (
           <li className="text-2xl" key={t.id}>
@@ -30,6 +53,7 @@ export default async function Home() {
           </li>
         ))}
       </ul>
+      */}
     </main>
   );
   /*
