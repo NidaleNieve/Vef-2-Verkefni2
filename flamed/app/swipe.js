@@ -7,6 +7,7 @@ export default function SwipeStack() {
   const [users, setUsers] = useState([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [actions, setActions] = useState([])
+  const [swipeTriggers, setSwipeTriggers] = useState([]) // 🔹 new empty array
 
   // Fetch JSON from public folder
   useEffect(() => {
@@ -16,7 +17,7 @@ export default function SwipeStack() {
         const mappedData = data.map((restaurant, index) => ({
           id: index + 1,
           name: restaurant.name,
-          age: Math.round(restaurant.rating * 10), // optional: convert rating to int
+          age: Math.round(restaurant.rating * 10),
           image: restaurant.menu[0]?.image || `https://picsum.photos/300/400?random=${index + 1}`
         }))
         setUsers(mappedData)
@@ -26,6 +27,10 @@ export default function SwipeStack() {
 
   const handleAction = (action) => {
     setActions(prev => [...prev, { userId: users[currentIndex].id, action }])
+
+    // 🔹 trigger empty array entry when swiped
+    setSwipeTriggers(prev => [...prev, []])
+
     setCurrentIndex(prev => prev + 1)
   }
 
@@ -38,7 +43,7 @@ export default function SwipeStack() {
         <p>Likes: {actions.filter(a => a.action === 'like').length}</p>
         <p>Dislikes: {actions.filter(a => a.action === 'dislike').length}</p>
         <p>Favorites: {actions.filter(a => a.action === 'favorite').length}</p>
-        <button onClick={() => { setCurrentIndex(0); setActions([]) }}>
+        <button onClick={() => { setCurrentIndex(0); setActions([]); setSwipeTriggers([]) }}>
           Reset
         </button>
       </div>
