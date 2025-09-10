@@ -21,8 +21,10 @@ export default async function Home() {
           <li className="text-2xl" key={t.id}>
             {t.name}
             <ul>
-              <li className="text-l">
+              <li className="ml-4 text-lg">
                 {t.location.neighborhood}, {t.rating}
+                <br />
+                {t.cuisine.join(", ")}
               </li>
             </ul>
           </li>
