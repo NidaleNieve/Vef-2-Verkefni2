@@ -37,7 +37,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 
 ## Data accessible in supabase
-
+### Restuarants
 | Name | Format | type |
 |---| ---| --- |
 | id | uuid | string |
