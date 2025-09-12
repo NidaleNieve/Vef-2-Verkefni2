@@ -93,14 +93,15 @@ export default function Swiper() {
     return (
         <div className="bg-white rounded-lg shadow p-6">
             <h2 className="text-3xl font-bold mb-2">{t.name}</h2>
-            <Image
-                src={t.square_img_url}
-                alt={t.name}
-                width={300}
-                height={300}
-                className="rounded mb-4 object-cover"
-            />
-
+            <div className="h-64 w-full relative mb-4">
+                <Image
+                    src={t.hero_img_url || t.square_img_url}
+                    alt={t.name}
+                    width={300}
+                    height={300}
+                    className="rounded mb-4 object-cover"
+                />
+            </div>
             <p className="text-lg mb-1">
             {t.parent_city}, Rating: {t.avg_rating} ({t.review_count} reviews)
             </p>
