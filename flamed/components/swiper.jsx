@@ -25,13 +25,11 @@ export default function Swiper() {
                     parent_city,
                     avg_rating,
                     cuisines,
-                    is_active,
                     price_tag,
                     review_count,
                     hero_img_url,
                     square_img_url    
                 `)
-                .eq('is_active', true)
                 .limit(10); //temp limit
 
             if (error) {
@@ -49,7 +47,7 @@ export default function Swiper() {
     if (restaurants.length === 0) {
         return <div className="text-gray-600">No restaurants found.</div>;
     }
-    
+
     const t = restaurants[current];
 
     const acceptedItem = () => {
