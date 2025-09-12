@@ -19,7 +19,18 @@ export default function Swiper() {
         const load = async () => {
             const { data, error } = await supabase
                 .from('restaurants')
-                .select('id,name,parent_city,avg_rating,cuisines,is_active,price_tag')
+                .select(`
+                    id,
+                    name,
+                    parent_city,
+                    avg_rating,
+                    cuisines,
+                    is_active,
+                    price_tag,
+                    review_count,
+                    hero_img_url,
+                    square_img_url    
+                `)
                 .eq('is_active', true)
                 .limit(10); //temp limit
 
@@ -73,9 +84,9 @@ export default function Swiper() {
         <div className="bg-white rounded-lg shadow p-6">
             <h2 className="text-3xl font-bold mb-2">{t.name}</h2>
             <p className="text-lg mb-1">
-            {t.location.neighborhood}, Rating: {t.rating}
+            {t.parent_city}, Rating: {t.avg_rating} ({t.review_count} reviews)
             </p>
-            <p className="text-base text-gray-700 mb-4">Cuisine: {t.cuisine.join(", ")}</p>
+            <p className="text-base text-gray-700 mb-4">Cuisine: {t.cuisines.join(", ")}</p>
 
             <div className="flex gap-3">
             <button
