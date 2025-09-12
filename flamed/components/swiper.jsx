@@ -2,6 +2,10 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "../lib/supabaseClient";
+import Results from "./results";
+
+//Next image renderer fyrir myndir
+import Image from "next/image";
 
 //Main functioninið, sem renderar veitingastaðina
 export default function Swiper() {
@@ -43,9 +47,19 @@ export default function Swiper() {
         load();
     }, []);
 
+    //sýnir loading
+    if (loading) {
+        return <div className="text-gray-600">Loading...</div>;
+    }
+
     //error handling, ef enginn veitingastaður fundinn
     if (restaurants.length === 0) {
-        return <div className="text-gray-600">No restaurants found.</div>;
+        return <div className="text-red-600">No restaurants found.</div>;
+    }
+
+    //sýnir generic error 
+    if (error) {
+        return <div className="text-red-600">Error: {error}</div>;
     }
 
     const t = restaurants[current];
@@ -64,10 +78,22 @@ export default function Swiper() {
         setCurrent((prev) => prev + 1);
     };
 
+    //ef að allir veitingastaðirnir eru búnir, þá sýnir results component úr results skjalinu
+    if (current >= restaurants.length) {
+        return (
+            <Results
+                restaurants={restaurants}
+                acceptedIds={accepted}
+                rejectedIds={rejected}
+            />
+        );
+    }
+
     //temp ui, þangað til að ég integrata við swiping cards
     return (
         <div className="bg-white rounded-lg shadow p-6">
             <h2 className="text-3xl font-bold mb-2">{t.name}</h2>
+            
             <p className="text-lg mb-1">
             {t.parent_city}, Rating: {t.avg_rating} ({t.review_count} reviews)
             </p>
@@ -95,17 +121,5 @@ export default function Swiper() {
             {current + 1} / {restaurants.length}
             </div>
         </div>
-    );
-
-    //ef að allir veitingastaðirnir eru búnir, þá sýnir results component
-    if (current >= restaurants.length) {
-        return (
-        <Results
-            restaurants={restaurants}
-            acceptedIds={accepted}
-            rejectedIds={rejected}
-            onRestart={reset}
-        />
-        );
-    }
+    );    
 }
