@@ -49,20 +49,7 @@ export default function Swiper() {
     if (restaurants.length === 0) {
         return <div className="text-gray-600">No restaurants found.</div>;
     }
-
-    //"results síðan" mjög basic, sýnir arrayana
-    /*
-    if (current >= restaurants.length) {
-        return (
-            <div className="bg-white rounded-lg shadow p-6">
-                <h2 className="text-2xl font-bold mb-2">Done</h2>
-                <p className="mb-1">Accepted: {accepted.join(", ")}</p>
-                <p>Rejected: {rejected.join(", ")}</p>
-            </div>
-        );
-    }
-    */
-
+    
     const t = restaurants[current];
 
     const acceptedItem = () => {
