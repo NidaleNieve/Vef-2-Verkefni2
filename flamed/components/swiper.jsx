@@ -1,14 +1,38 @@
 'use client';
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { supabase } from "../lib/supabaseClient";
 
-//Main functioninið, sem renderar veitingastaðina, tek inn veitingastaðina sem arguement
-export default function Swiper({ initialRestaurants = [] }) {
+//Main functioninið, sem renderar veitingastaðina
+export default function Swiper() {
     //bý til breytur sem halda utan um veitingastaðina og hvað er valið
-    const restaurants = initialRestaurants; 
+    const [restaurants, setRestaurants] = useState([]); // restaurants state
+    const [loading, setLoading] = useState(true);//breyta til þess að geta byrt loading
+    const [error, setError] = useState(null); //error state, segir sig sjálft
+
     const [current, setCurrent] = useState(0); //current staðurinn, geymir listann, byrjar á 0
     const [accepted, setAccepted] = useState([]); //array sem geymir veitingastaðin sem eru samþykktir
     const [rejected, setRejected] = useState([]);
+
+    //function sem fetchar veitingastaðina frá supabase og byrtir loading screen
+    useEffect(() => {
+        const load = async () => {
+            const { data, error } = await supabase
+                .from('restaurants')
+                .select('id,name,parent_city,avg_rating,cuisines,is_active,price_tag')
+                .eq('is_active', true)
+                .limit(10); //temp limit
+
+            if (error) {
+                setError(error.message);
+                setRestaurants([]);
+            } else {
+                setRestaurants(data || []);
+            }
+            setLoading(false);
+        };
+        load();
+    }, []);
 
     //error handling, ef enginn veitingastaður fundinn
     if (restaurants.length === 0) {
@@ -16,6 +40,7 @@ export default function Swiper({ initialRestaurants = [] }) {
     }
 
     //"results síðan" mjög basic, sýnir arrayana
+    /*
     if (current >= restaurants.length) {
         return (
             <div className="bg-white rounded-lg shadow p-6">
@@ -25,6 +50,7 @@ export default function Swiper({ initialRestaurants = [] }) {
             </div>
         );
     }
+    */
 
     const t = restaurants[current];
 
@@ -41,7 +67,6 @@ export default function Swiper({ initialRestaurants = [] }) {
     const ignoreItem = () => {
         setCurrent((prev) => prev + 1);
     };
-
 
     //temp ui, þangað til að ég integrata við swiping cards
     return (
@@ -75,4 +100,16 @@ export default function Swiper({ initialRestaurants = [] }) {
             </div>
         </div>
     );
+
+    //ef að allir veitingastaðirnir eru búnir, þá sýnir results component
+    if (current >= restaurants.length) {
+        return (
+        <Results
+            restaurants={restaurants}
+            acceptedIds={accepted}
+            rejectedIds={rejected}
+            onRestart={reset}
+        />
+        );
+    }
 }
