@@ -96,50 +96,47 @@ export default function Swiper() {
 
 
     return (
-    <div className="min-h-[28rem] flex flex-col items-center justify-center">
-        <div className="relative w-72 h-96">
-        {visibleCards.map((restaurant, index) => {
-          const isTop = index === 0;
-          const stackIndex = visibleCards.length - 1 - index;
-          return (
-            <Card
-              key={restaurant.id}
-              restaurant={restaurant}
-              isTop={isTop}
-              stackIndex={stackIndex}
-              onLike={acceptedItem}
-              onDislike={rejectedItem}
-            />
-          );
-        })}
-      </div>
+        <div className="min-h-[28rem] flex flex-col items-center justify-center">
+            <div className="relative w-72 h-96">
+                {visibleCards.map((restaurant, index) => {
+                    const isTop = index === 0;
+                    const stackIndex = visibleCards.length - 1 - index;
+                    return (
+                    <Card
+                        key={restaurant.id}
+                        restaurant={restaurant}
+                        isTop={isTop}
+                        stackIndex={stackIndex}
+                        onLike={acceptedItem}
+                        onDislike={rejectedItem}
+                    />
+                    );
+                })}
+            </div>
 
-      <div className="flex gap-3 mt-6">
-        <button
-          onClick={rejectedItem}
-          className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded"
-        >
-          Reject
-        </button>
-        <button
-          onClick={ignoreItem}
-          className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded"
-        >
-          Skip
-        </button>
-        <button
-          onClick={acceptedItem}
-          className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded"
-        >
-          Accept
-        </button>
-      </div>
+            <div className="flex gap-3 mt-6">
+                <button
+                    onClick={rejectedItem}
+                    className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded">
+                    Reject
+                </button>
+                <button
+                    onClick={ignoreItem}
+                    className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded">
+                    Skip
+                </button>
+                <button
+                    onClick={acceptedItem}
+                    className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                    Accept
+                </button>
+            </div>
 
-      <div className="text-sm text-gray-500 mt-4">
-        {current + 1} / {restaurants.length}
-      </div>
-    </div>
-  );
+            <div className="text-sm text-gray-500 mt-4">
+                {current + 1} / {restaurants.length}
+            </div>
+        </div>
+    );
 }
 
 function Card({ restaurant, isTop, stackIndex, onLike, onDislike }) {
@@ -197,23 +194,23 @@ function Card({ restaurant, isTop, stackIndex, onLike, onDislike }) {
         </p>
       </div>
 
-      {isTop && (
+        {isTop && (
         <>
-          <motion.div
-            className="absolute top-5 right-5 text-green-600 font-bold"
-            style={{ opacity: likeOpacity }}
-          >
+            <motion.div
+                className="absolute top-5 right-5 text-green-600 font-bold"
+                style={{ opacity: likeOpacity }}
+            >
             LIKE
-          </motion.div>
-          <motion.div
-            className="absolute top-5 left-5 text-red-600 font-bold"
-            style={{ opacity: dislikeOpacity }}
-          >
+            </motion.div>
+            <motion.div
+                className="absolute top-5 left-5 text-red-600 font-bold"
+                style={{ opacity: dislikeOpacity }}
+            >
             DISLIKE
-          </motion.div>
+            </motion.div>
         </>
-      )}
-    </motion.div>
+        )}
+        </motion.div>
     );
     /*
     //temp ui, þangað til að ég integrata við swiping cards
