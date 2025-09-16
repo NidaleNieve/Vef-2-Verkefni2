@@ -140,62 +140,62 @@ export default function Swiper() {
 }
 
 function Card({ restaurant, isTop, stackIndex, onLike, onDislike }) {
-  const x = useMotionValue(0);
-  const rotate = useTransform(x, [-200, 200], [-15, 15]);
-  const likeOpacity = useTransform(x, [0, 200], [0, 1]);
-  const dislikeOpacity = useTransform(x, [-200, 0], [1, 0]);
+    const x = useMotionValue(0);
+    const rotate = useTransform(x, [-200, 200], [-15, 15]);
+    const likeOpacity = useTransform(x, [0, 200], [0, 1]);
+    const dislikeOpacity = useTransform(x, [-200, 0], [1, 0]);
 
-  const handleDragEnd = (_, info) => {
+    const handleDragEnd = (_, info) => {
     const threshold = 70;
-    if (info.offset.x > threshold) onLike();
-    else if (info.offset.x < -threshold) onDislike();
-    else x.set(0);
-  };
+        if (info.offset.x > threshold) onLike();
+        else if (info.offset.x < -threshold) onDislike();
+        else x.set(0);
+    };
 
-  const image =
-    restaurant.hero_img_url ||
-    restaurant.square_img_url ||
-    `https://picsum.photos/300/400?random=${restaurant.id}`;
+    const image =
+        restaurant.hero_img_url ||
+        restaurant.square_img_url ||
+        `https://picsum.photos/300/400?random=${restaurant.id}`;
 
-  return (
-    <motion.div
-      style={{
-        x,
-        rotate,
-        width: '100%',
-        height: '100%',
-        borderRadius: '16px',
-        backgroundColor: '#fff',
-        overflow: 'hidden',
-        boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
-        position: 'absolute',
-        cursor: isTop ? 'grab' : 'auto',
-        scale: 1 - stackIndex * 0.02,
-        translateY: stackIndex * 10,
-        zIndex: isTop ? 100 : 10 - stackIndex,
-      }}
-      drag={isTop ? 'x' : false}
-      dragConstraints={false}
-      dragElastic={0.7}
-      onDragEnd={isTop ? handleDragEnd : undefined}
-      whileTap={{ cursor: isTop ? 'grabbing' : 'auto' }}
-    >
-      <img
-        src={image}
-        alt={restaurant.name}
-        className="w-full h-72 object-cover"
-      />
-      <div className="p-3">
-        <h3 className="text-lg font-semibold">
-          {restaurant.name}
-        </h3>
-        <p className="text-sm text-gray-600">
-          {restaurant.parent_city} • {restaurant.avg_rating ?? 'N/A'} ({restaurant.review_count ?? 0})
-        </p>
-      </div>
+    return (
+        <motion.div
+            style={{
+                x,
+                rotate,
+                width: '100%',
+                height: '100%',
+                borderRadius: '16px',
+                backgroundColor: '#fff',
+                overflow: 'hidden',
+                boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
+                position: 'absolute',
+                cursor: isTop ? 'grab' : 'auto',
+                scale: 1 - stackIndex * 0.02,
+                translateY: stackIndex * 10,
+                zIndex: isTop ? 100 : 10 - stackIndex,
+            }}
+            drag={isTop ? 'x' : false}
+            dragConstraints={false}
+            dragElastic={0.7}
+            onDragEnd={isTop ? handleDragEnd : undefined}
+            whileTap={{ cursor: isTop ? 'grabbing' : 'auto' }}
+        >
+        <img
+            src={image}
+            alt={restaurant.name}
+            className="w-full h-72 object-cover"
+        />
+        <div className="p-3">
+            <h3 className="text-lg font-semibold">
+                {restaurant.name}
+            </h3>
+            <p className="text-sm text-gray-600">
+                {restaurant.parent_city} • {restaurant.avg_rating ?? 'N/A'} ({restaurant.review_count ?? 0})
+            </p>
+        </div>
 
         {isTop && (
-        <>
+            <>
             <motion.div
                 className="absolute top-5 right-5 text-green-600 font-bold"
                 style={{ opacity: likeOpacity }}
@@ -208,51 +208,8 @@ function Card({ restaurant, isTop, stackIndex, onLike, onDislike }) {
             >
             DISLIKE
             </motion.div>
-        </>
+            </>
         )}
         </motion.div>
     );
-    /*
-    //temp ui, þangað til að ég integrata við swiping cards
-    return (
-        <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-3xl font-bold mb-2">{t.name}</h2>
-            <div className="h-64 w-full relative mb-4">
-                <Image
-                    src={t.hero_img_url || t.square_img_url}
-                    alt={t.name}
-                    width={300}
-                    height={300}
-                    className="rounded mb-4 object-cover"
-                />
-            </div>
-            <p className="text-lg mb-1">
-            {t.parent_city}, Rating: {t.avg_rating} ({t.review_count} reviews)
-            </p>
-            <p className="text-base text-gray-700 mb-4">Cuisine: {t.cuisines.join(", ")}</p>
-
-            <div className="flex gap-3">
-            <button
-                onClick={acceptedItem}
-                className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
-                Accept
-            </button>
-            <button
-                onClick={ignoreItem}
-                className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded">
-                Skip
-            </button>
-            <button
-                onClick={rejectedItem}
-                className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded">
-                Reject
-            </button>
-            </div>
-
-            <div className="text-sm text-gray-500 mt-4">
-            {current + 1} / {restaurants.length}
-            </div>
-        </div>
-    );
-    */
 }
