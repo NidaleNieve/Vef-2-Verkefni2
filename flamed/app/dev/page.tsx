@@ -12,7 +12,6 @@ export default function Dev() {
   const [content, setContent] = useState('')
   const [log, setLog] = useState<string[]>([])
   const [fullName, setFullName] = useState('Dev User')
-
   const logit = (x: any) => setLog(l => [`> ${JSON.stringify(x)}`, ...l])
 
   return (
