@@ -171,19 +171,19 @@ function Card({ restaurant, isTop, stackIndex, onLike, onDislike }) {
             animate(x, -1000, {
                 type: 'tween',
                 ease: 'easeOut',
-                duration: 0.22,
+                duration: 0.42,
                 onComplete: onDislike,
             });
         } else {
             animate(x, 0, {
                 type: 'tween',
                 ease: 'easeOut',
-                duration: 0.15,
+                duration: 0.25,
             });
             animate(y, 0, {
                 type: 'tween',
                 ease: 'easeOut',
-                duration: 0.15,
+                duration: 0.25,
             });
         }
     };
@@ -197,30 +197,16 @@ function Card({ restaurant, isTop, stackIndex, onLike, onDislike }) {
     };
 
     return (
-        <motion.div
-            style={{
-                x,
-                y,
-                rotate,
-                width: '100%',
-                height: '100%',
-                borderRadius: '16px',
-                backgroundColor: '#fff',
-                overflow: 'hidden',
-                boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
-                position: 'absolute',
-                cursor: isTop ? 'grab' : 'auto',
-                scale: 1 - stackIndex * 0.02,
-                translateY: stackIndex * 10,
-                zIndex: isTop ? 100 : 10 - stackIndex,
-            }}
-            drag={isTop ? true : false}
-            dragConstraints={false}
-            dragElastic={0.2}
-            dragMomentum={false}
-            onDragEnd={isTop ? handleDragEnd : undefined}
-            whileTap={{ cursor: isTop ? 'grabbing' : 'auto' }}
-        >
+        Image
+                src={imageSrc}
+                alt={restaurant.name}
+                width={300}
+                height={400}
+                className="w-full h-72 object-cover"
+                draggable={false}
+                onError={handleImageError}
+            />
+       
             <Image
                 src={imageSrc}
                 alt={restaurant.name}
