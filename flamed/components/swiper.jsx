@@ -176,7 +176,7 @@ function Card({ restaurant, isTop, stackIndex, onLike, onDislike }) {
                 translateY: stackIndex * 10,
                 zIndex: isTop ? 100 : 10 - stackIndex,
             }}
-            drag={isTop ? 'x' : false}
+            drag={isTop ? true : false}
             dragConstraints={false}
             dragElastic={0.7}
             onDragEnd={isTop ? handleDragEnd : undefined}
