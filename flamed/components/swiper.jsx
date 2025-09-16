@@ -9,6 +9,8 @@ import Image from "next/image";
 
 //framer motion fyrir swiping cards
 import { motion, useMotionValue, useTransform, animate } from "framer-motion";
+import { createPortal } from "react-dom"; //fyrir edge glow like/dislike
+
 
 //Main functioninið, sem renderar veitingastaðina
 export default function Swiper() {
@@ -141,6 +143,7 @@ export default function Swiper() {
 
 function Card({ restaurant, isTop, stackIndex, onLike, onDislike }) {
     const x = useMotionValue(0);
+    const y = useMotionValue(0);
     const rotate = useTransform(x, [-200, 200], [-15, 15]);
     const likeOpacity = useTransform(x, [0, 200], [0, 1]);
     const dislikeOpacity = useTransform(x, [-200, 0], [1, 0]);
@@ -177,6 +180,11 @@ function Card({ restaurant, isTop, stackIndex, onLike, onDislike }) {
                 ease: 'easeOut',
                 duration: 0.15,
             });
+            animate(y, 0, {
+                type: 'tween',
+                ease: 'easeOut',
+                duration: 0.15,
+            });
         }
     };
 
@@ -192,6 +200,7 @@ function Card({ restaurant, isTop, stackIndex, onLike, onDislike }) {
         <motion.div
             style={{
                 x,
+                y,
                 rotate,
                 width: '100%',
                 height: '100%',
@@ -212,40 +221,51 @@ function Card({ restaurant, isTop, stackIndex, onLike, onDislike }) {
             onDragEnd={isTop ? handleDragEnd : undefined}
             whileTap={{ cursor: isTop ? 'grabbing' : 'auto' }}
         >
-        <Image
-            src={imageSrc}
-            alt={restaurant.name}
-            width={300}
-            height={400}
-            className="w-full h-72 object-cover"
-            draggable={false}
-            onError={handleImageError}
-        />
-        <div className="p-3">
-            <h3 className="text-lg font-semibold">
-                {restaurant.name}
-            </h3>
-            <p className="text-sm text-gray-600">
-                {restaurant.parent_city} • {restaurant.avg_rating ?? 'N/A'} ({restaurant.review_count ?? 0})
-            </p>
-        </div>
+            <Image
+                src={imageSrc}
+                alt={restaurant.name}
+                width={300}
+                height={400}
+                className="w-full h-72 object-cover"
+                draggable={false}
+                onError={handleImageError}
+            />
+            <div className="p-3">
+                <h3 className="text-lg font-semibold">
+                    {restaurant.name}
+                </h3>
+                <p className="text-sm text-gray-600">
+                    {restaurant.parent_city} • {restaurant.avg_rating ?? 'N/A'} ({restaurant.review_count ?? 0})
+                </p>
+            </div>
 
-        {isTop && (
-            <>
-            <motion.div
-                className="absolute top-5 right-5 text-green-600 font-bold"
-                style={{ opacity: likeOpacity }}
-            >
-            LIKE
-            </motion.div>
-            <motion.div
-                className="absolute top-5 left-5 text-red-600 font-bold"
-                style={{ opacity: dislikeOpacity }}
-            >
-            DISLIKE
-            </motion.div>
-            </>
-        )}
+            {isTop && createPortal(
+                <>
+                <motion.div
+                    style={{
+                        position: 'fixed',
+                        inset: 0,
+                        pointerEvents: 'none',
+                        zIndex: 9999,
+                        opacity: likeOpacity,
+                        background: 'linear-gradient(to right, rgba(34,197,94,0) 75%, rgba(34,197,94,0.45) 100%)',
+                        willChange: 'opacity',
+                    }}
+                />
+                <motion.div
+                    style={{
+                        position: 'fixed',
+                        inset: 0,
+                        pointerEvents: 'none',
+                        zIndex: 9999,
+                        opacity: dislikeOpacity,
+                        background: 'linear-gradient(to left, rgba(239,68,68,0) 75%, rgba(239,68,68,0.45) 100%)',
+                        willChange: 'opacity',
+                    }}
+                />
+                </>,
+                document.body
+            )}
         </motion.div>
     );
 }
