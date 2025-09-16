@@ -8,7 +8,7 @@ import Results from "./results";
 import Image from "next/image";
 
 //framer motion fyrir swiping cards
-import { motion, useMotionValue, useTransform } from "framer-motion";
+import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 
 //Main functioninið, sem renderar veitingastaðina
 export default function Swiper() {
@@ -145,12 +145,41 @@ function Card({ restaurant, isTop, stackIndex, onLike, onDislike }) {
     const likeOpacity = useTransform(x, [0, 200], [0, 1]);
     const dislikeOpacity = useTransform(x, [-200, 0], [1, 0]);
 
+    /*
     const handleDragEnd = (_, info) => {
     const threshold = 70;
         if (info.offset.x > threshold) onLike();
         else if (info.offset.x < -threshold) onDislike();
         else x.set(0);
     };
+    */
+
+    //Þetta function lætur cardsin fljúga út úr skjánnum þegar þau eru swiped
+    const handleDragEnd = (_, info) => {
+        const threshold = 70;
+        if (info.offset.x > threshold) {
+            animate(x, 1000, {
+            type: 'tween',
+            ease: 'easeOut',
+            duration: 0.22,
+            onComplete: onLike,
+        });
+        } else if (info.offset.x < -threshold) {
+            animate(x, -1000, {
+                type: 'tween',
+                ease: 'easeOut',
+                duration: 0.22,
+                onComplete: onDislike,
+            });
+        } else {
+            animate(x, 0, {
+                type: 'tween',
+                ease: 'easeOut',
+                duration: 0.15,
+            });
+        }
+    };
+
 
     //myndir með error handling, ef hero image er ekki til, þá nota ég square image
     const [imageSrc, setImageSrc] = useState(restaurant.hero_img_url || restaurant.square_img_url);
@@ -188,6 +217,7 @@ function Card({ restaurant, isTop, stackIndex, onLike, onDislike }) {
             width={300}
             height={400}
             className="w-full h-72 object-cover"
+            draggable={false}
             onError={handleImageError}
         />
         <div className="p-3">
