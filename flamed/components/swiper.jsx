@@ -100,7 +100,7 @@ export default function Swiper() {
             <div className="relative w-72 h-96">
                 {visibleCards.map((restaurant, index) => {
                     const isTop = index === 0;
-                    const stackIndex = visibleCards.length - 1 - index;
+                    const stackIndex = index;
                     return (
                     <Card
                         key={restaurant.id}
@@ -152,10 +152,12 @@ function Card({ restaurant, isTop, stackIndex, onLike, onDislike }) {
         else x.set(0);
     };
 
-    const image =
-        restaurant.hero_img_url ||
-        restaurant.square_img_url ||
-        `https://picsum.photos/300/400?random=${restaurant.id}`;
+    //myndir með error handling, ef hero image er ekki til, þá nota ég square image
+    const [imageSrc, setImageSrc] = useState(restaurant.hero_img_url || restaurant.square_img_url);
+
+    const handleImageError = () => {
+        setImageSrc(restaurant.square_img_url);
+    };
 
     return (
         <motion.div
@@ -180,10 +182,13 @@ function Card({ restaurant, isTop, stackIndex, onLike, onDislike }) {
             onDragEnd={isTop ? handleDragEnd : undefined}
             whileTap={{ cursor: isTop ? 'grabbing' : 'auto' }}
         >
-        <img
-            src={image}
+        <Image
+            src={imageSrc}
             alt={restaurant.name}
+            width={300}
+            height={400}
             className="w-full h-72 object-cover"
+            onError={handleImageError}
         />
         <div className="p-3">
             <h3 className="text-lg font-semibold">
