@@ -156,7 +156,7 @@ function Card({ restaurant, isTop, stackIndex, onLike, onDislike }) {
 
     //Þetta function lætur cardsin fljúga út úr skjánnum þegar þau eru swiped
     const handleDragEnd = (_, info) => {
-        const threshold = 70;
+        const threshold = 200;
         if (info.offset.x > threshold) {
             animate(x, 1000, {
             type: 'tween',
@@ -207,7 +207,8 @@ function Card({ restaurant, isTop, stackIndex, onLike, onDislike }) {
             }}
             drag={isTop ? true : false}
             dragConstraints={false}
-            dragElastic={0.7}
+            dragElastic={0.2}
+            dragMomentum={false}
             onDragEnd={isTop ? handleDragEnd : undefined}
             whileTap={{ cursor: isTop ? 'grabbing' : 'auto' }}
         >
