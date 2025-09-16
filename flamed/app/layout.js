@@ -9,9 +9,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="flex flex-col min-h-screen bg-[#E8D4B7]">
+      <body className="flex flex-col min-h-screen">
         {/* Header */}
-        <header className="bg-[#9B177E] text-white">
+        <header className="text-white" style={{ background: "var(--nav-footer-bg)" }}>
           <Navbar />
         </header>
 
@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
         </main>
 
         {/* Footer */}
-        <footer className="bg-[#9B177E] text-white p-4">
+        <footer className="text-white p-4" style={{ background: "var(--nav-footer-bg)" }}>
           <div className="container mx-auto text-center">
             &copy; {new Date().getFullYear()} Our Website. All rights reserved.
           </div>
