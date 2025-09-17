@@ -191,81 +191,97 @@ function Card({ restaurant, isTop, stackIndex, onLike, onDislike }) {
 
     //myndir með error handling, ef hero image er ekki til, þá nota ég square image
     const [imageSrc, setImageSrc] = useState(restaurant.hero_img_url || restaurant.square_img_url);
-
     const handleImageError = () => {
         setImageSrc(restaurant.square_img_url);
     };
 
+    // Triggerinn fyrir cardið næst í röðinni
+    const targetScale = 1 - stackIndex * 0.02;
+    const targetY = stackIndex * 10;
+
     return (
         <motion.div
+            //animations fyrir card næst í röðinni
             style={{
-                x,
-                y,
-                rotate,
+                position: 'absolute',
                 width: '100%',
                 height: '100%',
-                borderRadius: '16px',
-                backgroundColor: '#fff',
-                overflow: 'hidden',
-                boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
-                position: 'absolute',
-                cursor: isTop ? 'grab' : 'auto',
-                scale: 1 - stackIndex * 0.02,
-                translateY: stackIndex * 10,
                 zIndex: isTop ? 100 : 10 - stackIndex,
             }}
-            drag={isTop ? true : false}
-            dragConstraints={false}
-            dragElastic={0.2}
-            dragMomentum={false}
-            onDragEnd={isTop ? handleDragEnd : undefined}
-            whileTap={{ cursor: isTop ? 'grabbing' : 'auto' }}
+            initial={false}
+            animate={{ scale: targetScale, y: targetY }}
+            transition={{ type: 'spring', stiffness: 260, damping: 22 }}
         >
-            <Image
-                src={imageSrc}
-                alt={restaurant.name}
-                width={300}
-                height={400}
-                className="w-full h-72 object-cover"
-                draggable={false}
-                onError={handleImageError}
-            />
-            <div className="p-3">
-                <h3 className="text-lg font-semibold">
-                    {restaurant.name}
-                </h3>
-                <p className="text-sm text-gray-600">
-                    {restaurant.parent_city} • {restaurant.avg_rating ?? 'N/A'} ({restaurant.review_count ?? 0})
-                </p>
-            </div>
+            <motion.div
+                style={{
+                    x,
+                    y,
+                    rotate,
+                    width: '100%',
+                    height: '100%',
+                    borderRadius: '16px',
+                    backgroundColor: '#fff',
+                    overflow: 'hidden',
+                    boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
+                    position: 'absolute',
+                    cursor: isTop ? 'grab' : 'auto',
+                    scale: 1 - stackIndex * 0.02,
+                    translateY: stackIndex * 10,
+                    zIndex: isTop ? 100 : 10 - stackIndex,
+                }}
+                drag={isTop ? true : false}
+                dragConstraints={false}
+                dragElastic={0.2}
+                dragMomentum={false}
+                onDragEnd={isTop ? handleDragEnd : undefined}
+                whileTap={{ cursor: isTop ? 'grabbing' : 'auto' }}
+            >
+                <Image
+                    src={imageSrc}
+                    alt={restaurant.name}
+                    width={300}
+                    height={400}
+                    className="w-full h-72 object-cover"
+                    draggable={false}
+                    onError={handleImageError}
+                />
+                <div className="p-3">
+                    <h3 className="text-lg font-semibold">
+                        {restaurant.name}
+                    </h3>
+                    <p className="text-sm text-gray-600">
+                        {restaurant.parent_city} • {restaurant.avg_rating ?? 'N/A'} ({restaurant.review_count ?? 0})
+                    </p>
+                </div>
+        </motion.div>
 
-            {isTop && createPortal(
-                <>
-                <motion.div
-                    style={{
-                        position: 'fixed',
-                        inset: 0,
-                        pointerEvents: 'none',
-                        zIndex: 9999,
-                        opacity: likeOpacity,
-                        background: 'linear-gradient(to right, rgba(34,197,94,0) 75%, rgba(34,197,94,0.45) 100%)',
-                        willChange: 'opacity',
-                    }}
-                />
-                <motion.div
-                    style={{
-                        position: 'fixed',
-                        inset: 0,
-                        pointerEvents: 'none',
-                        zIndex: 9999,
-                        opacity: dislikeOpacity,
-                        background: 'linear-gradient(to left, rgba(239,68,68,0) 75%, rgba(239,68,68,0.45) 100%)',
-                        willChange: 'opacity',
-                    }}
-                />
-                </>,
-                document.body
-            )}
+        {isTop && createPortal(
+            <>
+            <motion.div
+                style={{
+                    position: 'fixed',
+                    inset: 0,
+                    pointerEvents: 'none',
+                    zIndex: 9999,
+                    opacity: likeOpacity,
+                    background: 'linear-gradient(to right, rgba(34,197,94,0) 75%, rgba(34,197,94,0.45) 100%)',
+                    willChange: 'opacity',
+                }}
+            />
+            <motion.div
+                style={{
+                    position: 'fixed',
+                    inset: 0,
+                    pointerEvents: 'none',
+                    zIndex: 9999,
+                    opacity: dislikeOpacity,
+                    background: 'linear-gradient(to left, rgba(239,68,68,0) 75%, rgba(239,68,68,0.45) 100%)',
+                    willChange: 'opacity',
+                }}
+            />
+            </>,
+            document.body
+        )}
         </motion.div>
     );
 }
