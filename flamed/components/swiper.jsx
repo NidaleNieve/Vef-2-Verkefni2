@@ -218,8 +218,12 @@ function Card({ restaurant, isTop, stackIndex, acceptedItem, rejectedItem }) {
         >
             <motion.div
                 //nota tailwind fyrir sum style til þess að stylea fyrir dark mode létllega
-                className="bg-white dark:bg-black shadow-[0_4px_15px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_5px_rgba(128,128,128,0.2)] border border-gray-300 dark:border-gray-700"
-                style={{
+                className="bg-white dark:bg-black 
+                            shadow-[0_4px_15px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_5px_rgba(128,128,128,0.2)] 
+                            border border-gray-300 dark:border-gray-700
+                            [--drag-shadow:0_8px_25px_rgba(0,0,0,0.35)] 
+                            dark:[--drag-shadow:0_8px_15px_rgba(128,128,128,0.25)]"
+                    style={{
                     x,
                     y,
                     rotate,
@@ -241,6 +245,10 @@ function Card({ restaurant, isTop, stackIndex, acceptedItem, rejectedItem }) {
                 dragMomentum={false}
                 onDragEnd={isTop ? handleDragEnd : undefined}
                 whileTap={{ cursor: isTop ? 'grabbing' : 'auto' }}
+                whileDrag={{
+                    scale: 1.05,
+                    boxShadow: "var(--drag-shadow)"
+                }}
             >
                 <Image
                     src={imageSrc}
