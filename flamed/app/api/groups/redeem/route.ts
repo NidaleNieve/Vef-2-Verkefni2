@@ -4,10 +4,8 @@ import { serverClient } from '@/utils/supabase/server'
 // POST /api/groups/redeem { code }
 export async function POST(req: Request) {
   const { code } = await req.json()
-  if (!code) return NextResponse.json({ error: 'Missing code' }, { status: 400 })
-
   const supa = await serverClient()
-  const { data, error } = await supa.rpc('redeem_group_invite', { p_code: code })
+  const { data, error } = await supa.rpc('redeem_invite', { p_raw_code: code })
   if (error) return NextResponse.json({ error: error.message }, { status: 400 })
-  return NextResponse.json(data ?? { ok: true })
+  return NextResponse.json({ group_id: data })
 }
