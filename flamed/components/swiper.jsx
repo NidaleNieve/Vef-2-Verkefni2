@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef, forwardRef, useImperativeHandle } from "react"; //bætti við useRef, forwardRef, useImperativeHandle til þess að geta notað takkana sem swipe
 import { supabase } from "../lib/supabaseClient";
 import Results from "./results";
 
@@ -148,19 +148,16 @@ function Card({ restaurant, isTop, stackIndex, acceptedItem, rejectedItem }) {
     const x = useMotionValue(0);
     const y = useMotionValue(0);
     const rotate = useTransform(x, [-200, 200], [-15, 15]);
-    const likeOpacity = useTransform(x, [0, 200], [0, 1]);
-    const dislikeOpacity = useTransform(x, [-200, 0], [1, 0]);
-
+    const likeOpacity = useTransform(x, [0, 150, 400], [0, 1, 0]);
+    const dislikeOpacity = useTransform(x, [-400, -150, 0], [0, 1, 0]);
     //Exit breyta til þess að fá cardið til þess að fljúga út
     const [exitX, setExitX] = useState(null);
 
-    //Þetta function lætur cardsin fljúga út úr skjánnum þegar þau eru swiped 
+    //Þetta function lætur cardsin fljúga út úr skjánum þegar þau eru swiped
     const handleDragEnd = (_, info) => {
-        //const threshold = 200;
-
-        //breytur sem halda uta um window widtg til þess að láta cards fljúga út responsively
+        //breytur sem halda uta um window width til þess að láta cards fljúga út responsively
         const vw = window?.innerWidth || 1000;
-        const target = vw + 200; //target aðeins lengra en window width
+        const target = vw + 200; //target aðeins lengra en window width þannig cardið hverfi alveg
         const duration = Math.min(0.5, 0.14 + vw / 8000); //dynamic animation duration eftir skjástærð
 
         if (info.offset.x > 120) {
