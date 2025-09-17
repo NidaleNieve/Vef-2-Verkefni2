@@ -217,6 +217,8 @@ function Card({ restaurant, isTop, stackIndex, acceptedItem, rejectedItem }) {
             transition={{ type: 'spring', stiffness: 260, damping: 22 }}
         >
             <motion.div
+                //nota tailwind fyrir sum style til þess að stylea fyrir dark mode létllega
+                className="bg-white dark:bg-black shadow-[0_4px_15px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_5px_rgba(128,128,128,0.2)] border border-gray-300 dark:border-gray-700"
                 style={{
                     x,
                     y,
@@ -224,9 +226,9 @@ function Card({ restaurant, isTop, stackIndex, acceptedItem, rejectedItem }) {
                     width: '100%',
                     height: '100%',
                     borderRadius: '16px',
-                    backgroundColor: '#fff',
+                    //backgroundColor: '#fff',
                     overflow: 'hidden',
-                    boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
+                    //boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
                     position: 'absolute',
                     cursor: isTop ? 'grab' : 'auto',
                     scale: 1 - stackIndex * 0.02,
@@ -253,7 +255,7 @@ function Card({ restaurant, isTop, stackIndex, acceptedItem, rejectedItem }) {
                     <h3 className="text-lg font-semibold">
                         {restaurant.name}
                     </h3>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
                         {restaurant.parent_city} • {restaurant.avg_rating ?? 'N/A'} ({restaurant.review_count ?? 0})
                     </p>
                 </div>
