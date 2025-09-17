@@ -11,6 +11,8 @@ import Image from "next/image";
 import { motion, useMotionValue, useTransform, animate, AnimatePresence } from "framer-motion";
 import { createPortal } from "react-dom"; //fyrir edge glow like/dislike
 
+//finnur vindow width
+const vw = window?.innerWidth || 1000;
 
 //Main functioninið, sem renderar veitingastaðina
 export default function Swiper() {
@@ -148,15 +150,14 @@ function Card({ restaurant, isTop, stackIndex, acceptedItem, rejectedItem }) {
     const x = useMotionValue(0);
     const y = useMotionValue(0);
     const rotate = useTransform(x, [-200, 200], [-15, 15]);
-    const likeOpacity = useTransform(x, [0, 150, 400], [0, 1, 0]);
-    const dislikeOpacity = useTransform(x, [-400, -150, 0], [0, 1, 0]);
+    const likeOpacity = useTransform(x, [0, 200, vw], [0, 1, 0]);
+    const dislikeOpacity = useTransform(x, [-vw, -200, 0], [0, 1, 0]);
     //Exit breyta til þess að fá cardið til þess að fljúga út
     const [exitX, setExitX] = useState(null);
 
     //Þetta function lætur cardsin fljúga út úr skjánum þegar þau eru swiped
     const handleDragEnd = (_, info) => {
         //breytur sem halda uta um window width til þess að láta cards fljúga út responsively
-        const vw = window?.innerWidth || 1000;
         const target = vw + 200; //target aðeins lengra en window width þannig cardið hverfi alveg
         const duration = Math.min(0.5, 0.14 + vw / 8000); //dynamic animation duration eftir skjástærð
 
