@@ -8,7 +8,7 @@ import Results from "./results";
 import Image from "next/image";
 
 //framer motion fyrir swiping cards
-import { motion, useMotionValue, useTransform, animate } from "framer-motion";
+import { motion, useMotionValue, useTransform, animate, AnimatePresence } from "framer-motion";
 import { createPortal } from "react-dom"; //fyrir edge glow like/dislike
 
 
@@ -100,20 +100,23 @@ export default function Swiper() {
     return (
         <div className="min-h-[28rem] flex flex-col items-center justify-center">
             <div className="relative w-72 h-96">
-                {visibleCards.map((restaurant, index) => {
-                    const isTop = index === 0;
-                    const stackIndex = index;
-                    return (
-                    <Card
-                        key={restaurant.id}
-                        restaurant={restaurant}
-                        isTop={isTop}
-                        stackIndex={stackIndex}
-                        onLike={acceptedItem}
-                        onDislike={rejectedItem}
-                    />
-                    );
-                })}
+                {/*Animate Presence leyfir exit animation að virka vel og hverfa*/}
+                <AnimatePresence initial={false} mode="popLayout">
+                    {visibleCards.map((restaurant, index) => {
+                        const isTop = index === 0;
+                        const stackIndex = index;
+                        return (
+                        <Card
+                            key={restaurant.id}
+                            restaurant={restaurant}
+                            isTop={isTop}
+                            stackIndex={stackIndex}
+                            acceptedItem={acceptedItem}
+                            rejectedItem={rejectedItem}
+                        />
+                        );
+                    })}
+                </AnimatePresence>
             </div>
 
             <div className="flex gap-3 mt-6">
@@ -141,31 +144,41 @@ export default function Swiper() {
     );
 }
 
-function Card({ restaurant, isTop, stackIndex, onLike, onDislike }) {
+function Card({ restaurant, isTop, stackIndex, acceptedItem, rejectedItem }) {
     const x = useMotionValue(0);
     const y = useMotionValue(0);
     const rotate = useTransform(x, [-200, 200], [-15, 15]);
     const likeOpacity = useTransform(x, [0, 200], [0, 1]);
     const dislikeOpacity = useTransform(x, [-200, 0], [1, 0]);
 
-    //Þetta function lætur cardsin fljúga út úr skjánnum þegar þau eru swiped
+    //Exit breyta til þess að fá cardið til þess að fljúga út
+    const [exitX, setExitX] = useState(null);
+
+    //Þetta function lætur cardsin fljúga út úr skjánnum þegar þau eru swiped 
     const handleDragEnd = (_, info) => {
-        const threshold = 200;
-        
-        if (info.offset.x > threshold) {
-            animate(x, 1000, {
-            type: 'tween',
-            ease: 'easeOut',
-            duration: 0.22,
-            onComplete: onLike,
-        });
-        } else if (info.offset.x < -threshold) {
-            animate(x, -1000, {
+        //const threshold = 200;
+
+        //breytur sem halda uta um window widtg til þess að láta cards fljúga út responsively
+        const vw = window?.innerWidth || 1000;
+        const target = vw + 200; //target aðeins lengra en window width
+        const duration = Math.min(0.5, 0.14 + vw / 8000); //dynamic animation duration eftir skjástærð
+
+        if (info.offset.x > 120) {
+            setExitX(target); //keyri exit
+            animate(x, target, {
                 type: 'tween',
                 ease: 'easeOut',
-                duration: 0.42,
-                onComplete: onDislike,
+                duration, //nota dynamic duration
             });
+            requestAnimationFrame(acceptedItem);
+        } else if (info.offset.x < -120) {
+            setExitX(-target); //keyri exit
+            animate(x, -target, {
+                type: 'tween',
+                ease: 'easeOut',
+                duration,
+            });
+            requestAnimationFrame(rejectedItem);
         } else {
             animate(x, 0, {
                 type: 'tween',
@@ -202,6 +215,7 @@ function Card({ restaurant, isTop, stackIndex, onLike, onDislike }) {
             }}
             initial={false}
             animate={{ scale: targetScale, y: targetY }}
+            exit={{ opacity: 0, transition: { delay: 0.16, duration: 0.02 } }}
             transition={{ type: 'spring', stiffness: 260, damping: 22 }}
         >
             <motion.div
