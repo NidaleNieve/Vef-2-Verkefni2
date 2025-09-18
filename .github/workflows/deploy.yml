@@ -1,15 +1,21 @@
-name: Build & Publish to `site` branch
+name: Build & Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ]  # change if your default branch is different
+    branches: [ main, site ]
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+  pages: write      # to deploy to Pages
+  id-token: write   # to verify the deployment originates from an appropriate source
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
 
 jobs:
-  build-and-publish:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -22,13 +28,12 @@ jobs:
           cache: 'npm'
           cache-dependency-path: flamed/package-lock.json
 
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
       - name: Install deps
         working-directory: flamed
         run: npm ci
-
-      # if deploying to username.github.io/<repo>, set NEXT_PUBLIC_GH_PAGES_REPO
-      # env:
-      #   NEXT_PUBLIC_GH_PAGES_REPO: your-repo-name
 
       - name: Build & Export
         env:
@@ -40,10 +45,18 @@ jobs:
           npm run export
           [ -d out ] && touch out/.nojekyll
 
-      - name: Publish to `site` branch
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: site
-          publish_dir: flamed/out
-          force_orphan: true
+          path: flamed/out
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
