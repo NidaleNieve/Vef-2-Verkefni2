@@ -1,20 +1,15 @@
-name: Deploy Next.js to GitHub Pages
+name: Build & Publish to `site` branch
 
 on:
   push:
-    branches: [ main ]  # or your default branch
+    branches: [ main ]  # change if your default branch is different
+  workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: true
+  contents: write
 
 jobs:
-  build:
+  build-and-publish:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -29,24 +24,20 @@ jobs:
       - name: Install deps
         run: npm ci
 
+      # if deploying to username.github.io/<repo>, set NEXT_PUBLIC_GH_PAGES_REPO
+      # env:
+      #   NEXT_PUBLIC_GH_PAGES_REPO: your-repo-name
+
       - name: Build & Export
         run: |
           npm run build
           npm run export
-          touch out/.nojekyll   # ensure _next/ isn’t mangled by Jekyll
+          [ -d out ] && touch out/.nojekyll
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Publish to `site` branch
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: out
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: site
+          publish_dir: out
+          force_orphan: true
