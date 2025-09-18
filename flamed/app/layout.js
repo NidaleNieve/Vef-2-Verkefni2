@@ -1,4 +1,5 @@
 import { Geist, Geist_Mono } from "next/font/google";
+import Link from "next/link";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -25,7 +26,7 @@ export default function RootLayout({ children }) {
       >
         {children}
 
-        <a
+        <Link
           href="/"
           style={{
             position: "fixed",
@@ -43,9 +44,9 @@ export default function RootLayout({ children }) {
             transition: "background 0.2s"
           }}>
           Swipe
-        </a>
+        </Link>
       
-        <a
+        <Link
           href="/dev"
           style={{
             position: "fixed",
@@ -64,7 +65,7 @@ export default function RootLayout({ children }) {
           }}
         >
           Dev
-        </a>
+        </Link>
 
       </body>
     </html>
