@@ -1,9 +1,14 @@
 // next.config.js
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  experimental: {
-    appDir: true,
-  },
-}
+const isProd = process.env.NODE_ENV === 'production';
+const repo = 'myrepo';
 
-module.exports = nextConfig
+/** @type {import('next').NextConfig} */
+module.exports = {
+  experimental: { appDir: true },
+  output: 'export',
+  trailingSlash: true,
+  images: { unoptimized: true },
+  assetPrefix: isProd && repo ? `/${repo}/` : '',
+  basePath:   isProd && repo ? `/${repo}`   : '',
+};
+
