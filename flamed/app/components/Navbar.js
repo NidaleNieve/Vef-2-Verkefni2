@@ -1,33 +1,20 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Home, User, MessageSquare, Menu, X, Sun, Moon } from 'lucide-react';
+import { Home, User, MessageSquare, Users, Menu, X } from 'lucide-react';
+import DarkModeToggle from './DarkModeToggle';
+import DarkModeToggleWithLabel from './DarkModeToggleWithLabel';
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
-    // Check if dark mode is preferred system setting
-    const isDarkPreferred = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    setDarkMode(isDarkPreferred);
-    document.documentElement.classList.toggle('dark', isDarkPreferred);
-    
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const toggleDarkMode = () => {
-    const newDarkMode = !darkMode;
-    setDarkMode(newDarkMode);
-    document.documentElement.classList.toggle('dark', newDarkMode);
-    
-    // Save preference to localStorage
-    localStorage.setItem('darkMode', newDarkMode.toString());
-  };
 
   return (
     <nav 
@@ -64,21 +51,6 @@ export default function Navbar() {
                 onMouseEnter={(e) => e.target.style.background = "var(--nav-item-hover)"}
                 onMouseLeave={(e) => e.target.style.background = "var(--nav-item-bg)"}
               >
-                <Home size={18} className="group-hover:scale-110 transition-transform" />
-                Home
-              </a>
-            </li>
-            <li>
-              <a 
-                href="#" 
-                className="px-4 py-2 rounded-lg transition-all duration-200 flex items-center gap-2 group"
-                style={{ 
-                  color: "var(--nav-text)",
-                  background: "var(--nav-item-bg)"
-                }}
-                onMouseEnter={(e) => e.target.style.background = "var(--nav-item-hover)"}
-                onMouseLeave={(e) => e.target.style.background = "var(--nav-item-bg)"}
-              >
                 <User size={18} className="group-hover:scale-110 transition-transform" />
                 Profile
               </a>
@@ -95,43 +67,57 @@ export default function Navbar() {
                 onMouseLeave={(e) => e.target.style.background = "var(--nav-item-bg)"}
               >
                 <MessageSquare size={18} className="group-hover:scale-110 transition-transform" />
-                Chats
+                Chat
               </a>
             </li>
-            <li className="pl-2">
-              <button
-                onClick={toggleDarkMode}
-                className="p-2 rounded-full transition-all duration-200 flex items-center justify-center group"
+            <li>
+              <a 
+                href="#" 
+                className="px-4 py-2 rounded-lg transition-all duration-200 flex items-center gap-2 group"
                 style={{ 
-                  background: "var(--nav-item-bg)",
-                  color: "var(--nav-text)"
+                  color: "var(--nav-text)",
+                  background: "var(--nav-item-bg)"
                 }}
                 onMouseEnter={(e) => e.target.style.background = "var(--nav-item-hover)"}
                 onMouseLeave={(e) => e.target.style.background = "var(--nav-item-bg)"}
-                aria-label="Toggle dark mode"
               >
-                {darkMode ? (
-                  <Sun size={20} className="group-hover:rotate-12 transition-transform" />
-                ) : (
-                  <Moon size={20} className="group-hover:rotate-12 transition-transform" />
-                )}
-              </button>
+                <Users size={18} className="group-hover:scale-110 transition-transform" />
+                Groups
+              </a>
+            </li>
+            <li className="pl-2">
+              <DarkModeToggle iconSize={20} />
             </li>
           </ul>
 
-          {/* Mobile menu button */}
-          <button
-            className="md:hidden relative w-8 h-8 focus:outline-none flex items-center justify-center transition-transform hover:scale-110"
-            style={{ color: "var(--nav-text)" }}
-            onClick={() => setOpen(!open)}
-            aria-label="Toggle menu"
-          >
-            {open ? <X size={32} /> : <Menu size={32} />}
-          </button>
+          {/* Mobile Navigation - Profile link outside hamburger */}
+          <div className="md:hidden flex items-center">
+            <a 
+              href="#" 
+              className="px-3 py-2 rounded-lg transition-all duration-200 flex items-center gap-2 mr-4 group"
+              style={{ 
+                color: "var(--nav-text)",
+                background: "var(--nav-item-bg)"
+              }}
+              onMouseEnter={(e) => e.target.style.background = "var(--nav-item-hover)"}
+              onMouseLeave={(e) => e.target.style.background = "var(--nav-item-bg)"}
+            >
+              <User size={20} className="group-hover:scale-110 transition-transform" />
+            </a>
+            
+            <button
+              className="relative w-8 h-8 focus:outline-none flex items-center justify-center transition-transform hover:scale-110"
+              style={{ color: "var(--nav-text)" }}
+              onClick={() => setOpen(!open)}
+              aria-label="Toggle menu"
+            >
+              {open ? <X size={32} /> : <Menu size={32} />}
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Mobile Navigation */}
+      {/* Mobile Navigation Menu */}
       <div 
         className={`md:hidden overflow-hidden transition-all duration-500 ease-in-out ${
           open ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
@@ -139,7 +125,7 @@ export default function Navbar() {
         style={{ background: "var(--nav-bg)" }}
       >
         <ul className="container mx-auto px-4 py-4 flex flex-col space-y-4">
-          {['Home', 'Profile', 'Chats'].map((item, index) => (
+          {['Chat', 'Groups'].map((item, index) => (
             <li key={item}>
               <a 
                 href="#" 
@@ -152,40 +138,17 @@ export default function Navbar() {
                 onMouseLeave={(e) => e.target.style.background = "var(--nav-item-bg)"}
                 onClick={() => setOpen(false)}
               >
-                {index === 0 && <Home size={20} className="group-hover:scale-110 transition-transform" />}
-                {index === 1 && <User size={20} className="group-hover:scale-110 transition-transform" />}
-                {index === 2 && <MessageSquare size={20} className="group-hover:scale-110 transition-transform" />}
+                {index === 0 && <MessageSquare size={20} className="group-hover:scale-110 transition-transform" />}
+                {index === 1 && <Users size={20} className="group-hover:scale-110 transition-transform" />}
                 {item}
               </a>
             </li>
           ))}
           <li className="px-4 py-3 flex justify-center">
-            <button
-              onClick={() => {
-                toggleDarkMode();
-                setOpen(false);
-              }}
-              className="flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-200 group"
-              style={{ 
-                background: "var(--nav-item-bg)",
-                color: "var(--nav-text)"
-              }}
-              onMouseEnter={(e) => e.target.style.background = "var(--nav-item-hover)"}
-              onMouseLeave={(e) => e.target.style.background = "var(--nav-item-bg)"}
-              aria-label="Toggle dark mode"
-            >
-              {darkMode ? (
-                <>
-                  <Sun size={18} className="group-hover:rotate-12 transition-transform" />
-                  <span>Light Mode</span>
-                </>
-              ) : (
-                <>
-                  <Moon size={18} className="group-hover:rotate-12 transition-transform" />
-                  <span>Dark Mode</span>
-                </>
-              )}
-            </button>
+            <DarkModeToggleWithLabel 
+              onClick={() => setOpen(false)}
+              iconSize={18}
+            />
           </li>
         </ul>
       </div>

@@ -2,11 +2,10 @@
 import { useState, useEffect } from "react";
 import { Sun, Moon } from 'lucide-react';
 
-export default function DarkModeToggle({ className = "", iconSize = 20 }) {
+export default function DarkModeToggleWithLabel({ className = "", iconSize = 18 }) {
   const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
-    // Check localStorage first, then system preference
     const savedDarkMode = localStorage.getItem('darkMode');
     const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     
@@ -28,7 +27,7 @@ export default function DarkModeToggle({ className = "", iconSize = 20 }) {
   return (
     <button
       onClick={toggleDarkMode}
-      className={`p-2 rounded-full transition-all duration-200 flex items-center justify-center group ${className}`}
+      className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-200 group ${className}`}
       style={{ 
         background: "var(--nav-item-bg)",
         color: "var(--nav-text)"
@@ -38,9 +37,15 @@ export default function DarkModeToggle({ className = "", iconSize = 20 }) {
       aria-label="Toggle dark mode"
     >
       {darkMode ? (
-        <Sun size={iconSize} className="group-hover:rotate-12 transition-transform" />
+        <>
+          <Sun size={iconSize} className="group-hover:rotate-12 transition-transform" />
+          <span>Light Mode</span>
+        </>
       ) : (
-        <Moon size={iconSize} className="group-hover:rotate-12 transition-transform" />
+        <>
+          <Moon size={iconSize} className="group-hover:rotate-12 transition-transform" />
+          <span>Dark Mode</span>
+        </>
       )}
     </button>
   );
