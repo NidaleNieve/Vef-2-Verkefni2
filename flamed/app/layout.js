@@ -24,6 +24,27 @@ export default function RootLayout({ children }) {
         style={{ margin: 0, fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif" }}
       >
         {children}
+
+        <a
+          href="/"
+          style={{
+            position: "fixed",
+            top: "1rem",
+            right: "6rem",
+            zIndex: 1000,
+            background: "#fff",
+            border: "1px solid #ccc",
+            borderRadius: "6px",
+            padding: "0.5rem 1rem",
+            fontWeight: 500,
+            textDecoration: "none",
+            color: "#222",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
+            transition: "background 0.2s"
+          }}>
+          Swipe
+        </a>
+      
         <a
           href="/dev"
           style={{
@@ -44,6 +65,7 @@ export default function RootLayout({ children }) {
         >
           Dev
         </a>
+
       </body>
     </html>
   );
