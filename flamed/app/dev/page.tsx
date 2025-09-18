@@ -9,15 +9,14 @@ export default function Dev() {
   const [password, setPassword] = useState('Password123!')
   const [fullName, setFullName] = useState('Dev User')
 
-  const [groupId, setGroupId] = useState('')
-  const [inviteCode, setInviteCode] = useState('')
-  const [content, setContent] = useState('')
+  const [groupId, setGroupId] = useState<string>('')
+  const [inviteCode, setInviteCode] = useState<string>('')
+  const [content, setContent] = useState<string>('')
   const [userId, setUserId] = useState<string | null>(null)
 
   const [log, setLog] = useState<string[]>([])
   const logit = (x: any) => setLog(l => [`> ${JSON.stringify(x)}`, ...l])
 
-  // show who we are (useful in incognito vs normal window)
   useEffect(() => {
     (async () => {
       const { data: { user } } = await supa.auth.getUser()
@@ -31,6 +30,17 @@ export default function Dev() {
     const payload = { status: r.status, ...body }
     logit(payload)
     return { r, body: payload }
+  }
+
+  async function verifyMembership(gid: string) {
+    if (!gid) return
+    // RLS: this returns only YOUR membership row (if it exists)
+    const { data, error } = await supa
+      .from('group_members')
+      .select('group_id, user_id, role, joined_at')
+      .eq('group_id', gid)
+      .limit(1)
+    logit({ verifyMembership: { error: error?.message, rows: data?.length ?? 0, data } })
   }
 
   return (
@@ -78,7 +88,7 @@ export default function Dev() {
 
           <button className="border px-3 py-2" onClick={async()=>{
             await fetchJSON('/api/auth/signout', { method:'POST' })
-            setUserId(null)
+            setUserId(null); setGroupId('')
           }}>Sign out</button>
         </div>
       </div>
@@ -92,7 +102,10 @@ export default function Dev() {
               headers:{'content-type':'application/json'},
               body: JSON.stringify({ name: 'My Group' })
             })
-            if (body?.group_id) setGroupId(body.group_id)
+            if (typeof body?.group_id === 'string') {
+              setGroupId(body.group_id)
+              await verifyMembership(body.group_id)
+            }
           }}>Create group</button>
 
           <button className="border px-3 py-2" disabled={!groupId} onClick={async()=>{
@@ -101,23 +114,42 @@ export default function Dev() {
               headers:{'content-type':'application/json'},
               body: JSON.stringify({ max_uses: 5 })
             })
-            if (body?.code) setInviteCode(body.code)
+            if (typeof body?.code === 'string') setInviteCode(body.code)
           }}>Create invite</button>
         </div>
 
         <input className="border p-2 w-full" placeholder="invite code"
                value={inviteCode} onChange={e=>setInviteCode(e.target.value)} />
 
-        <div className="flex gap-2">
+        {/* Server route redeem */}
+        <div className="flex gap-2 flex-wrap">
           <button className="border px-3 py-2" onClick={async()=>{
+            const code = inviteCode.trim()
             const { body } = await fetchJSON('/api/groups/redeem', {
               method:'POST',
               headers:{'content-type':'application/json'},
-              body: JSON.stringify({ code: inviteCode })
+              body: JSON.stringify({ code })
             })
-            // IMPORTANT: set groupId from redeem response so buttons work in incognito
-            if (body?.group_id) setGroupId(body.group_id)
-          }}>Redeem invite</button>
+            if (typeof body?.group_id === 'string') {
+              setGroupId(body.group_id)
+              await verifyMembership(body.group_id)
+            }
+          }}>
+            Redeem invite (server)
+          </button>
+
+          {/* Client-side RPC (debug fallback) */}
+          <button className="border px-3 py-2" onClick={async()=>{
+            const code = inviteCode.trim()
+            const { data, error } = await supa.rpc('redeem_group_invite', { p_code: code })
+            logit({ clientRPC: { data, error: error?.message } })
+            if (typeof data === 'string') {
+              setGroupId(data)
+              await verifyMembership(data)
+            }
+          }}>
+            Redeem invite (client RPC)
+          </button>
         </div>
       </div>
 
