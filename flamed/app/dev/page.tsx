@@ -3,6 +3,14 @@
 import { useEffect, useState } from 'react'
 import { supabaseBrowser } from '@/utils/supabase/browser'
 
+type MyGroup = {
+  group_id: string
+  group_name: string
+  role: string
+  joined_at?: string
+  group_created_at?: string
+}
+
 export default function Dev() {
   const supa = supabaseBrowser()
   const [email, setEmail] = useState('user1@example.com')
@@ -13,7 +21,9 @@ export default function Dev() {
   const [inviteCode, setInviteCode] = useState<string>('')
   const [content, setContent] = useState<string>('')
   const [userId, setUserId] = useState<string | null>(null)
+  const [newGroupName, setNewGroupName] = useState('Renamed Group')
 
+  const [groups, setGroups] = useState<MyGroup[]>([])
   const [log, setLog] = useState<string[]>([])
   const logit = (x: any) => setLog(l => [`> ${JSON.stringify(x)}`, ...l])
 
@@ -43,6 +53,28 @@ export default function Dev() {
     logit({ verifyMembership: { error: error?.message, rows: data?.length ?? 0, data } })
   }
 
+  // Load groups for current user and populate dropdown
+  async function loadMyGroups() {
+    // Preferred: get_my_groups() (no args)
+    let { data, error } = await supa.rpc('get_my_groups')
+
+    if (error) {
+      logit({ get_my_groups_error: error.message })
+      setGroups([])
+      return
+    }
+    const arr = Array.isArray(data) ? (data as MyGroup[]) : []
+    setGroups(arr)
+    logit({ get_my_groups_count: arr.length })
+    // If no current group selected, default to first
+    if (!groupId && arr.length) setGroupId(arr[0].group_id)
+  }
+
+  // After creating a group or redeeming an invite, refresh groups
+  async function refreshGroupsIfPossible() {
+    if (userId) await loadMyGroups()
+  }
+
   return (
     <div className="p-4 space-y-4 max-w-lg">
       <h1 className="font-semibold text-lg">Dev Console</h1>
@@ -51,6 +83,61 @@ export default function Dev() {
         userId: {userId || '(not signed in)'}<br />
         groupId: {groupId || '(none)'}
       </p>
+
+      {/* Load groups and select group */}
+      <div className="space-y-2">
+        <button className="border px-3 py-2" onClick={loadMyGroups}>
+          Load my groups
+        </button>
+
+        {groups.length > 0 && (
+          <select
+            className="border p-2"
+            value={groupId}
+            onChange={e => setGroupId(e.target.value)}
+            title="Select a group"
+          >
+            {groups.map(g => (
+              <option key={g.group_id} value={g.group_id}>
+                {g.group_name} ({g.role})
+              </option>
+            ))}
+          </select>
+        )}
+      </div>
+
+      {/* Rename group */}
+      <div className="space-y-2">
+        <div className="flex gap-2 items-center">
+          <input
+            className="border p-2 flex-1"
+            placeholder="new group name"
+            value={newGroupName}
+            onChange={(e) => setNewGroupName(e.target.value)}
+          />
+          <button
+            className="border px-3 py-2"
+            disabled={!groupId || newGroupName.trim().length < 2}
+            onClick={async () => {
+              const name = newGroupName.trim()
+              // RPC path (recommended): calls SQL function rename_group()
+              const { data, error } = await supa.rpc('rename_group', {
+                p_group_id: groupId,
+                p_new_name: name,
+              })
+              logit({ rename_group_rpc: { data, error: error?.message } })
+              if (!error) {
+                await loadMyGroups()        // refresh dropdown to see new name
+              }
+            }}
+          >
+            Rename (RPC)
+          </button>
+        </div>
+        <p className="text-xs opacity-70">
+          You must be an <em>admin/owner</em> of the selected group to rename it.
+        </p>
+      </div>
 
       {/* Auth */}
       <div className="space-y-2">
