@@ -20,8 +20,10 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
+          cache-dependency-path: flamed/package-lock.json
 
       - name: Install deps
+        working-directory: flamed
         run: npm ci
 
       # if deploying to username.github.io/<repo>, set NEXT_PUBLIC_GH_PAGES_REPO
@@ -29,6 +31,10 @@ jobs:
       #   NEXT_PUBLIC_GH_PAGES_REPO: your-repo-name
 
       - name: Build & Export
+        env:
+          NEXT_PUBLIC_GH_PAGES_REPO: Vef-2-Verkefni2
+          NODE_ENV: production
+        working-directory: flamed
         run: |
           npm run build
           npm run export
@@ -39,5 +45,5 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: site
-          publish_dir: out
+          publish_dir: flamed/out
           force_orphan: true
