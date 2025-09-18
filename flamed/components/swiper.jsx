@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef, forwardRef, useImperativeHandle } from "react"; //bætti við useRef, forwardRef, useImperativeHandle til þess að geta notað takkana sem swipe
 import { supabase } from "../lib/supabaseClient";
 import Results from "./results";
 
@@ -11,6 +11,10 @@ import Image from "next/image";
 import { motion, useMotionValue, useTransform, animate, AnimatePresence } from "framer-motion";
 import { createPortal } from "react-dom"; //fyrir edge glow like/dislike
 
+//finnur vindow width og height, með gott error handling
+//const vw = window?.innerWidth || 1000;
+const vw = typeof window !== 'undefined' ? window.innerWidth : 1000;
+const vh = typeof window !== 'undefined' ? window.innerHeight : 1000;
 
 //Main functioninið, sem renderar veitingastaðina
 export default function Swiper() {
@@ -22,6 +26,7 @@ export default function Swiper() {
     const [current, setCurrent] = useState(0); //current staðurinn, geymir listann, byrjar á 0
     const [accepted, setAccepted] = useState([]); //array sem geymir veitingastaðin sem eru samþykktir
     const [rejected, setRejected] = useState([]);
+    const [action, setAction] = useState(null); //action state til þess að geta triggerað swipe með tökkum
 
     //function sem fetchar veitingastaðina frá supabase og byrtir loading screen
     useEffect(() => {
@@ -96,6 +101,12 @@ export default function Swiper() {
 
     const visibleCards = restaurants.slice(current, current + 3);
 
+    //top level function sem triggerar action útfrá tökkum á rétta cardið
+    const triggerAction = (type) => {
+        const top = restaurants[current];
+        if (!top) return;
+        setAction({ type, id: top.id });
+    };
 
     return (
         <div className="min-h-[28rem] flex flex-col items-center justify-center">
@@ -105,6 +116,7 @@ export default function Swiper() {
                     {visibleCards.map((restaurant, index) => {
                         const isTop = index === 0;
                         const stackIndex = index;
+                        {/*Card component sem sér um hvert card, action prop sem triggerar swipe með tökkum*/}
                         return (
                         <Card
                             key={restaurant.id}
@@ -113,6 +125,9 @@ export default function Swiper() {
                             stackIndex={stackIndex}
                             acceptedItem={acceptedItem}
                             rejectedItem={rejectedItem}
+                            ignoreItem={ignoreItem}
+                            action={action}
+                            onActionConsumed={() => setAction(null)}
                         />
                         );
                     })}
@@ -121,17 +136,23 @@ export default function Swiper() {
 
             <div className="flex gap-3 mt-6">
                 <button
-                    onClick={rejectedItem}
+                    //onClick={rejectedItem}
+                    //triggerar reject action sem lætur cardið fljúga til vinstri sem triggerar rejectedItem
+                    onClick={() => triggerAction('reject')}
                     className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded">
                     Reject
                 </button>
                 <button
-                    onClick={ignoreItem}
+                    //onClick={ignoreItem}
+                    //triggerar skip action sem lætur cardið fljúga upp og triggerar svo ignoreItem
+                    onClick={() => triggerAction('skip')}
                     className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded">
                     Skip
                 </button>
                 <button
-                    onClick={acceptedItem}
+                    //onClick={acceptedItem}
+                    //triggerar accept action sem lætur cardið fljúga til hægri sem triggerar acceptedItem
+                    onClick={() => triggerAction('accept')}
                     className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
                     Accept
                 </button>
@@ -144,41 +165,38 @@ export default function Swiper() {
     );
 }
 
-function Card({ restaurant, isTop, stackIndex, acceptedItem, rejectedItem }) {
+function Card({ restaurant, isTop, stackIndex, acceptedItem, rejectedItem, ignoreItem, action, onActionConsumed }) {
     const x = useMotionValue(0);
     const y = useMotionValue(0);
     const rotate = useTransform(x, [-200, 200], [-15, 15]);
-    const likeOpacity = useTransform(x, [0, 200], [0, 1]);
-    const dislikeOpacity = useTransform(x, [-200, 0], [1, 0]);
+    const likeOpacity = useTransform(x, [0, 200, vw], [0, 1, 0]);
+    const dislikeOpacity = useTransform(x, [-vw, -200, 0], [0, 1, 0]);
 
-    //Exit breyta til þess að fá cardið til þess að fljúga út
-    const [exitX, setExitX] = useState(null);
-
-    //Þetta function lætur cardsin fljúga út úr skjánnum þegar þau eru swiped 
+    //Þetta function lætur cardsin fljúga út úr skjánum þegar þau eru swiped
     const handleDragEnd = (_, info) => {
-        //const threshold = 200;
-
-        //breytur sem halda uta um window widtg til þess að láta cards fljúga út responsively
-        const vw = window?.innerWidth || 1000;
-        const target = vw + 200; //target aðeins lengra en window width
-        const duration = Math.min(0.5, 0.14 + vw / 8000); //dynamic animation duration eftir skjástærð
-
+        //breytur sem halda uta um window width til þess að láta cards fljúga út responsively
+        const target = vw + 200; //target aðeins lengra en window width þannig cardið hverfi alveg
+        const duration = Math.min(0.3, 0.14 + vw / 8000); //dynamic animation duration eftir skjástærð
+        //const duration = Math.max(0.18, Math.min(0.5, 0.14 + vw / 3000));
         if (info.offset.x > 120) {
-            setExitX(target); //keyri exit
             animate(x, target, {
                 type: 'tween',
                 ease: 'easeOut',
                 duration, //nota dynamic duration
+                onComplete: () => {
+                    acceptedItem();
+                }
             });
-            requestAnimationFrame(acceptedItem);
         } else if (info.offset.x < -120) {
-            setExitX(-target); //keyri exit
             animate(x, -target, {
                 type: 'tween',
                 ease: 'easeOut',
                 duration,
+                onComplete: () => {
+                    rejectedItem();
+                }
             });
-            requestAnimationFrame(rejectedItem);
+        //færir cardið aftur í miðjuna ef það er ekki swipað nógu langt
         } else {
             animate(x, 0, {
                 type: 'tween',
@@ -204,6 +222,46 @@ function Card({ restaurant, isTop, stackIndex, acceptedItem, rejectedItem }) {
     const targetScale = 1 - stackIndex * 0.02;
     const targetY = stackIndex * 10;
 
+    //function sem lætur cardið fljúga upp þegar skip takkinn er ýttur
+    const swipeSkip = () => {
+        //notar vh í stað vw til þess að láta cardið fljúga lóðrétt upp
+        const target = (vh + 200) * -1;
+        const duration = Math.max(0.3, 0.14 + vh / 8000); //dynamic animation duration eftir skjástærð
+        animate(y, target, {
+            type: 'tween',
+            ease: 'easeOut',
+            duration,
+            onComplete: () => {
+                ignoreItem();
+            }
+        });
+    };
+    
+    //function sem lætur cardið fljúga til hægri eða vinstri útfrá tökkunum
+    const swipe = (direction) => {
+        const target = (vw + 200) * (direction === 'right' ? 1 : -1); //target aðeins lengra en window width þannig cardið hverfi alveg
+        const duration = Math.max(0.3, 0.14 + vw / 8000); //dynamic animation duration eftir skjástærð
+        animate(x, target, {
+            type: 'tween',
+            ease: 'easeOut',
+            duration,
+            onComplete: () => {
+                if (direction === 'right') acceptedItem();
+                else rejectedItem();
+            }
+        });
+    };
+
+    //useEffect sem hlustar á action state og triggerar swipe function ef allt er rétt
+    useEffect(() => {
+        if (!isTop || !action) return;
+        if (action.id !== restaurant.id) return;
+        if (action.type === 'accept') swipe('right');
+        else if (action.type === 'reject') swipe('left');
+        else if (action.type === 'skip') swipeSkip();
+        onActionConsumed && onActionConsumed();
+    }, [action, isTop, restaurant.id]);
+
     return (
         <motion.div
             //animations fyrir card næst í röðinni
@@ -215,20 +273,26 @@ function Card({ restaurant, isTop, stackIndex, acceptedItem, rejectedItem }) {
             }}
             initial={false}
             animate={{ scale: targetScale, y: targetY }}
-            exit={{ opacity: 0, transition: { delay: 0.16, duration: 0.02 } }}
+            //exit={{ opacity: 0, transition: { delay: 0.16, duration: 0.02 } }}
             transition={{ type: 'spring', stiffness: 260, damping: 22 }}
         >
             <motion.div
-                style={{
+                //nota tailwind fyrir sum style til þess að stylea fyrir dark mode létllega
+                className="bg-white dark:bg-black 
+                            shadow-[0_4px_15px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_5px_rgba(128,128,128,0.2)] 
+                            border border-gray-300 dark:border-gray-700
+                            [--drag-shadow:0_8px_25px_rgba(0,0,0,0.35)] 
+                            dark:[--drag-shadow:0_8px_15px_rgba(128,128,128,0.25)]"
+                    style={{
                     x,
                     y,
                     rotate,
                     width: '100%',
                     height: '100%',
                     borderRadius: '16px',
-                    backgroundColor: '#fff',
+                    //backgroundColor: '#fff',
                     overflow: 'hidden',
-                    boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
+                    //boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
                     position: 'absolute',
                     cursor: isTop ? 'grab' : 'auto',
                     scale: 1 - stackIndex * 0.02,
@@ -241,6 +305,10 @@ function Card({ restaurant, isTop, stackIndex, acceptedItem, rejectedItem }) {
                 dragMomentum={false}
                 onDragEnd={isTop ? handleDragEnd : undefined}
                 whileTap={{ cursor: isTop ? 'grabbing' : 'auto' }}
+                whileDrag={{
+                    scale: 1.05,
+                    boxShadow: "var(--drag-shadow)"
+                }}
             >
                 <Image
                     src={imageSrc}
@@ -255,7 +323,7 @@ function Card({ restaurant, isTop, stackIndex, acceptedItem, rejectedItem }) {
                     <h3 className="text-lg font-semibold">
                         {restaurant.name}
                     </h3>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
                         {restaurant.parent_city} • {restaurant.avg_rating ?? 'N/A'} ({restaurant.review_count ?? 0})
                     </p>
                 </div>
