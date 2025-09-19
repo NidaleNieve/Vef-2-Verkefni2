@@ -1,18 +1,9 @@
-import Navbar from "./components/Navbar";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import './globals.css';
+import Navbar from './components/Navbar';
 
 export const metadata = {
+  title: 'Our Website',
+  description: 'A simple Next.js + TailwindCSS website',
   title: "Swipe App",
   description: "Tinder-like swipe cards built with Next.js",
 };
@@ -28,49 +19,6 @@ export default function RootLayout({ children }) {
             "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif",
         }}
       >
-        {/* Floating links */}
-        <a
-          href="/"
-          style={{
-            position: "fixed",
-            top: "1rem",
-            right: "6rem",
-            zIndex: 1000,
-            background: "#fff",
-            border: "1px solid #ccc",
-            borderRadius: "6px",
-            padding: "0.5rem 1rem",
-            fontWeight: 500,
-            textDecoration: "none",
-            color: "#222",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
-            transition: "background 0.2s",
-          }}
-        >
-          Swipe
-        </a>
-
-        <a
-          href="/dev"
-          style={{
-            position: "fixed",
-            top: "1rem",
-            right: "1rem",
-            zIndex: 1000,
-            background: "#fff",
-            border: "1px solid #ccc",
-            borderRadius: "6px",
-            padding: "0.5rem 1rem",
-            fontWeight: 500,
-            textDecoration: "none",
-            color: "#222",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
-            transition: "background 0.2s",
-          }}
-        >
-          Dev
-        </a>
-
         {/* Header */}
         <header
           className="text-white"
