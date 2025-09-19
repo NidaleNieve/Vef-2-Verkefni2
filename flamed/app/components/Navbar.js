@@ -7,6 +7,7 @@ import DarkModeToggleWithLabel from './DarkModeToggleWithLabel';
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,15 +28,38 @@ export default function Navbar() {
       }}
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
-        <h1 className="text-2xl font-bold transition-all duration-300 hover:scale-105 cursor-pointer flex items-center"
-            style={{ color: "var(--nav-text)" }}>
-          <svg className="w-8 h-8 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M2 17L12 22L22 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M2 12L12 17L22 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-          BrandName
-        </h1>
+        <div className="relative flex items-center">
+          <h1 
+            className="text-2xl font-bold transition-all duration-300 hover:scale-105 cursor-pointer flex items-center"
+            style={{ color: "var(--nav-text)" }}
+            onMouseEnter={() => setShowTooltip(true)}
+            onMouseLeave={() => setShowTooltip(false)}
+          >
+            <img src="/logo.png" alt="Gastroswipe" className="w-8 h-8 mr-2" onError={() => setLogoError(true)}/>
+            Gastroswipe
+          </h1>
+          
+          {/* Did You Know Tooltip */}
+          <div 
+            className={`absolute top-full left-0 mt-2 w-64 p-3 rounded-lg shadow-lg transition-all duration-300 z-50 ${
+              showTooltip ? "opacity-100 visible translate-y-0" : "opacity-0 invisible -translate-y-2"
+            }`}
+            style={{
+              background: "var(--nav-item-hover)",
+              color: "var(--nav-text)"
+            }}
+          >
+            <div className="text-sm font-medium">
+              <span className="font-bold">Did you know:</span> Gastronomy is the practice or art of choosing, cooking, and eating good food.
+            </div>
+            <div 
+              className="absolute -top-1.5 left-6 w-3 h-3 rotate-45"
+              style={{
+                background: "var(--nav-item-hover)"
+              }}
+            />
+          </div>
+        </div>
         
         <div className="flex items-center space-x-4">
           {/* Desktop Navigation */}
