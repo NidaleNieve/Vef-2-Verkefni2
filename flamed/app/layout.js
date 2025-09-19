@@ -1,8 +1,9 @@
+// app/layout.js
 import './globals.css';
-import Navbar from './components/Navbar';
-import { Inter, Roboto } from 'next/font/google'; // Example fonts
+import { Inter, Roboto } from 'next/font/google';
+import { AppProvider } from './context/AppContext';
+import ConditionalNavbar from './components/ConditionalNavbar';
 
-// Geist fonts are not on Google Fonts directly, so pick close alternatives
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 const roboto = Roboto({ subsets: ['latin'], variable: '--font-mono' });
 
@@ -15,17 +16,10 @@ export default function RootLayout({ children }) {
   return (
     <html className={`${inter.variable} ${roboto.variable}`} lang="en">
       <body className="flex flex-col min-h-screen antialiased">
-        <header className="text-white" style={{ background: "var(--nav-footer-bg)" }}>
-          <Navbar />
-        </header>
-
-        <main className="flex-grow container mx-auto p-4">{children}</main>
-
-        <footer className="text-white p-4" style={{ background: "var(--nav-footer-bg)" }}>
-          <div className="container mx-auto text-center">
-            &copy; {new Date().getFullYear()} Our Website. All rights reserved.
-          </div>
-        </footer>
+        <AppProvider>
+          <ConditionalNavbar />
+          <main className="flex-grow">{children}</main>
+        </AppProvider>
       </body>
     </html>
   );

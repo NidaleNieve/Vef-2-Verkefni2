@@ -1,11 +1,7 @@
-import Navbar from './components/Navbar';
-import ClickableCircle from './components/ClickableCircle';
+// app/page.js
+'use client';
+import Intro from './components/Intro';  
 
 export default function HomePage() {
-  return (
-    <main className="min-h-screen">
-      <Navbar />
-      <ClickableCircle />
-    </main>
-  );
+  return <Intro />;
 }
