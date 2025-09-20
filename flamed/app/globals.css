@@ -2,15 +2,15 @@
 
 :root {
   /* Light Theme Colors */
-  --background: #FFEDFA;
+  --background: #FFF6FB;
   --foreground: #1e293b;
-  --nav-bg: #FFB8E0;
-  --nav-text: #3d3d3d;
-  --nav-item-bg: rgba(255, 255, 255, 0.1);
-  --nav-item-hover: rgba(255, 255, 255, 0.2);
-  --nav-shadow: rgba(79, 70, 229, 0.3);
-  --accent: #FFB8E0;
-  --muted: #64748b;
+  --nav-bg: #FFE3F0;
+  --nav-text: #374151;
+  --nav-item-bg: rgba(255, 255, 255, 0.5);
+  --nav-item-hover: rgba(255, 184, 224, 0.3);
+  --nav-shadow: rgba(79, 70, 229, 0.15);
+  --accent: #FFD6E8;
+  --muted: #A0AEC0;
 }
 
 .dark {

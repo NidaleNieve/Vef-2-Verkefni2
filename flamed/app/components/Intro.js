@@ -1,7 +1,8 @@
+// components/Intro.js
 'use client';
 import { useState } from 'react';
 import { Plus } from 'lucide-react';
-import { useApp } from '../context/AppContext';
+import { useRouter } from 'next/navigation';
 import DarkModeToggle from './DarkModeToggle';
 
 export default function Intro() {
@@ -9,49 +10,34 @@ export default function Intro() {
   const [isClicked, setIsClicked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [codeInput, setCodeInput] = useState('');
-  const { hasSession, setHasSession, setUserCode } = useApp();
+  const router = useRouter();
 
-  // Replace the setTimeout function in handleCircleClick with actual code generation logic
   const handleCircleClick = () => {
-    if (hasSession) return;
-    
     setIsClicked(true);
     setTimeout(() => setIsClicked(false), 500);
     
     setGeneratedCode('GENERATING...');
     
     setTimeout(() => {
-    // This is where the final code generation should go
       const code = Math.random().toString(36).substr(2, 8).toUpperCase();
       setGeneratedCode(code);
-      setUserCode(code);
-      setHasSession(true);
+      
+      // Redirect to preferences with the generated code
+      router.push(`/preferences?code=${code}`);
     }, 2000);
   };
 
   const handleCodeSubmit = (e) => {
     e.preventDefault();
-    if (codeInput.trim() && !hasSession) {
+    if (codeInput.trim()) {
       if (codeInput.length >= 4) {
-        setUserCode(codeInput);
-        setHasSession(true);
-        setCodeInput('');
+        // Redirect to preferences with the entered code
+        router.push(`/preferences?code=${codeInput.toUpperCase()}`);
       } else {
         alert('Please enter a valid code (at least 4 characters)');
       }
     }
   };
-
-  if (hasSession) {
-    return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--background)', color: 'var(--foreground)' }}>
-        <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Session Active!</h1>
-          <p>You're already in a session with code.</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen flex flex-col items-center p-4 relative" style={{ background: 'var(--background)', color: 'var(--foreground)' }}>
@@ -132,7 +118,7 @@ export default function Intro() {
             <input
               type="text"
               value={codeInput}
-              onChange={(e) => setCodeInput(e.target.value.toUpperCase())}
+              onChange={(e) => setCodeInput(e.target.value)}
               placeholder="ENTER EXISTING CODE"
               className="flex-1 px-4 py-3 border-2 rounded-xl font-mono font-semibold text-center focus:outline-none"
               style={{
